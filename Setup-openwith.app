@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Setup-openwith script by Lit
-# Version 1.0
+# Version 1.1
 #
 
 # --------------------------------------------------------------------------
@@ -28,8 +28,8 @@ READERS_COUNT="`echo "$READERS_APP" | awk -F, '{print NF}'`"
 
 Get_word()
 {
- w="`awk -F= '/^@'"$2"'=/ {print $2}' "$EBRMAIN_LANG/$LNG.txt"`"
- eval "$1=\"$w\""
+ w="`awk -F= '/^@'"$2"'=/ {print $2}' "$EBRMAIN_LANG/${LNG:-en}.txt"`"
+ eval "$1=\"${w:-$2}\""
 }
 
 Get_word w1 "Install"
@@ -44,12 +44,14 @@ Get_reader_name()
 {
  app_count=1
  for app in $READERS_APP; do
-  [ "$app" = "$2" ] && break
+  if [ "$app" = "$2" ]; then
+   app_name="`echo "$READERS_NAME" | cut -d , -f$app_count`"
+   eval "$1=\"$app_name\""
+   return
+  fi
   app_count="`expr $app_count + 1`"
  done
- [ "$READERS_COUNT" = 0 -o "$app_count" -gt "$READERS_COUNT" ] && eval "$1=\"${2%.app}\""
- app_name="`echo "$READERS_NAME" | cut -d , -f$app_count`"
- eval "$1=\"$app_name\""
+ eval "$1=\"${2%.app}\""
 }
 
 extensions=""
@@ -186,9 +188,16 @@ sync' > "$SYSTEM_BIN/openwith_apply.app"
 
 echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' '"$SYSTEM_CONFIG"'/global.cfg`"
-w1="`awk -F= '\''/^@BrowserClearHistory=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/$LNG.txt"`"
-w2="`awk -F= '\''/^@BooksOpened=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/$LNG.txt"`"
-w3="`awk -F= '\''/^@APP_file=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/$LNG.txt"`"
+
+Get_word()
+{
+ w="`awk -F= '\''/^@'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"`"
+ eval "$1=\"${w:-$2}\""
+}
+
+Get_word w1 "BrowserClearHistory"
+Get_word w2 "BooksOpened"
+Get_word w3 "APP_file"
 /ebrmain/bin/dialog 2 "" "$w1:
 $w2 - $w3
 (handlers.cfg)" "@Clear"
@@ -196,9 +205,16 @@ $w2 - $w3
 
 echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' '"$SYSTEM_CONFIG"'/global.cfg`"
-w1="`awk -F= '\''/^@Delete=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/$LNG.txt"`"
-w2="`awk -F= '\''/^@Advanced=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/$LNG.txt"`"
-w3="`awk -F= '\''/^@OpenWith=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/$LNG.txt"`"
+
+Get_word()
+{
+ w="`awk -F= '\''/^@'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"`"
+ eval "$1=\"${w:-$2}\""
+}
+
+Get_word w1 "Delete"
+Get_word w2 "Advanced"
+Get_word w3 "OpenWith"
 /ebrmain/bin/dialog 4 "" "$w1
 $w2
 \"$w3\"?" "@Delete"
