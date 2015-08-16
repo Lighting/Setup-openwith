@@ -32,10 +32,10 @@
 - Пункт меню "Удалить" полностью удаляет дополнительное меню "Открыть с помощью". При этом extensions.cfg остается с последними примененными ранее настройками. 
 
 После настройки скрипт создает во внутренней памяти следующие файлы: 
-/mnt/ext1/system/bin/openwith_apply.app 
-/mnt/ext1/system/bin/openwith_clear.app 
-/mnt/ext1/system/bin/openwith_remove.app 
-/mnt/ext1/system/config/openwith.cfg 
-/mnt/ext1/system/config/settings/personalize.json 
-/mnt/ext1/system/config/settings/openwith.json 
+/mnt/ext1/system/bin/openwith_apply.app
+/mnt/ext1/system/bin/openwith_clear.app
+/mnt/ext1/system/bin/openwith_remove.app
+/mnt/ext1/system/config/openwith.cfg
+/mnt/ext1/system/config/settings/personalize.json
+/mnt/ext1/system/config/settings/openwith.json
 Для ручного удаления дополнительного меню "Открыть с помощью", достаточно удаления этих файлов.
