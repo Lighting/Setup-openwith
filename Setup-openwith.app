@@ -1,19 +1,19 @@
 #!/bin/sh
 #
 # Setup-openwith script by Lit
-# Version 1.1
+# Version 1.2
+# https://github.com/Lighting/Setup-openwith
 #
 
 # --------------------------------------------------------------------------
-# Start of configure readers name
+# List of known readers names
 #
-# READERS_APP - list of reader executable files (/mnt/ext1/system/bin/)
-# READERS_NAME - list of readers name
+# READERS_APP - list of readers executable files (/mnt/ext1/system/bin/)
+# READERS_NAME - list of readers full names
 #
 READERS_APP="AdobeViewer.app,fbreader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app"
 READERS_NAME="@OpenWithAdobe,@OpenWithFbreader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader"
 #
-# End of configure readers name
 # --------------------------------------------------------------------------
 
 
@@ -222,9 +222,12 @@ if [ "$?" = 1 ]; then
  rm -f "'"$SYSTEM_SETTINGS"'/personalize.json"
  rm -f "'"$SYSTEM_SETTINGS"'/openwith.json"
  rm -f "'"$SYSTEM_CONFIG"'/openwith.cfg"
- rm -f "'"$SYSTEM_BIN"'/openwith_apply.app"
- rm -f "'"$SYSTEM_BIN"'/openwith_clear.app"
- rm -f "'"$SYSTEM_BIN"'/openwith_remove.app"
+ openwith="'"$SYSTEM_PATH"'/profiles/*/config/settings/openwith.json"
+ if [ "$openwith" = "`echo $openwith`" ]; then
+  rm -f "'"$SYSTEM_BIN"'/openwith_apply.app"
+  rm -f "'"$SYSTEM_BIN"'/openwith_clear.app"
+  rm -f "'"$SYSTEM_BIN"'/openwith_remove.app"
+ fi
  killall settings.app
 fi
 sync' > "$SYSTEM_BIN/openwith_remove.app"
