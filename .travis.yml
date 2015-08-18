@@ -15,5 +15,5 @@ install:
     - cp Setup-openwith.app /mnt/ext1/applications/
 
 script:
-    - busybox sh /mnt/ext1/applications/Setup-openwith.app
-    - [ -s /mnt/ext1/system/openwith_remove.app ]
+    - busybox sh /mnt/ext1/applications/Setup-openwith.app || true
+    - [ -s /mnt/ext1/system/bin/openwith_remove.app ]
