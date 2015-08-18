@@ -11,4 +11,4 @@ before_script:
     - sudo chmod +x /ebrmain/bin/dialog
 
 script:
-    - sh -x Setup-openwith.app
+    - bash -x Setup-openwith.app
