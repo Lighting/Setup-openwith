@@ -1,4 +1,4 @@
-language: bash
+language: sh
 
 sudo: required
 
@@ -17,8 +17,8 @@ install:
 
 script:
     - busybox sh -x /mnt/ext1/applications/Setup-openwith.app || true
-    - [ -s /mnt/ext1/system/config/settings/personalize.json ]
-    - [ -s /mnt/ext1/system/config/settings/openwith.json ]
-    - [ -s /mnt/ext1/system/bin/openwith_apply.app ]
-    - [ -s /mnt/ext1/system/bin/openwith_clear.app ]
-    - [ -s /mnt/ext1/system/bin/openwith_remove.app ]
+    - [ -s /mnt/ext1/system/config/settings/personalize.json ] && true
+    - [ -s /mnt/ext1/system/config/settings/openwith.json ] && true
+    - [ -s /mnt/ext1/system/bin/openwith_apply.app ] && true
+    - [ -s /mnt/ext1/system/bin/openwith_clear.app ] && true
+    - [ -s /mnt/ext1/system/bin/openwith_remove.app ] && true
