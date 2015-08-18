@@ -3,21 +3,12 @@ language: sh
 sudo: required
 
 before_script:
+    - sudo cp -R test-env/ebrmain /
     - sudo mkdir -p /mnt/ext1
-    - sudo mount --bind ./ /mnt/ext1
+    - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
 
-    - sudo mkdir -p /ebrmain/bin
-    - sudo mkdir -p /ebrmain/config/settings
-    - sudo mkdir -p /ebrmain/language
-    - mkdir -p /mnt/ext1/system/bin
-    - mkdir -p /mnt/ext1/system/config/settings
-
-    - sudo bash -c "echo -e '#/bin/sh\necho "$*"\nexit 1' > /ebrmain/bin/dialog"
+#need to remove
     - sudo chmod +x /ebrmain/bin/dialog
-    - sudo bash -c "echo -e '[\n\t{\n\t}\n]' > /ebrmain/config/settings/personalize.json"
-    - sudo touch /ebrmain/config/extensions.cfg
-    - sudo touch /ebrmain/language/en.txt
-    - touch /mnt/ext1/system/config/global.cfg
 
 script:
     - sh -x Setup-openwith.app
