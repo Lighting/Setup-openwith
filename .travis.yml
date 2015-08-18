@@ -1,4 +1,4 @@
-language: bash
+language: sh
 
 sudo: required
 
@@ -13,4 +13,4 @@ before_script:
     - mkdir /mnt/ext1/system/config/settings
 
 script:
-    - bash Setup-openwith.app
+    - sh Setup-openwith.app
