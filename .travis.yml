@@ -1,0 +1,10 @@
+language: bash
+
+before_script:
+    - mkdir /ebrmain/config
+    - mkdir /ebrmain/language
+    - mkdir /mnt/ext1/system/bin
+    - mkdir /mnt/ext1/system/config/settings
+
+script:
+    - bash Setup-openwith.app
