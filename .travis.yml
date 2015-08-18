@@ -11,7 +11,7 @@ before_install:
     - sudo chmod +x /ebrmain/bin/dialog
 
 install:
-    - cp --parents Setup-openwith.app /mnt/ext1/applications
+    - cp --parents Setup-openwith.app /mnt/ext1/applications/
 
 script:
     - busybox sh /mnt/ext1/applications/Setup-openwith.app
