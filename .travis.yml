@@ -1,4 +1,4 @@
-language: sh
+language: bash
 
 sudo: required
 
@@ -11,4 +11,4 @@ before_script:
     - sudo chmod +x /ebrmain/bin/dialog
 
 script:
-    - busybox sh -x Setup-openwith.app
+    - sh -x Setup-openwith.app
