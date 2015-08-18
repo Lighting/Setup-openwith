@@ -11,6 +11,7 @@ before_script:
     - mkdir -p /mnt/ext1/system/bin
     - mkdir -p /mnt/ext1/system/config/settings
     - sudo bash -c "echo -e '#/bin/sh\necho $@' > /ebrmain/bin/dialog"
+    - sudo chmod +x /ebrmain/bin/dialog
 
 script:
     - sh Setup-openwith.app
