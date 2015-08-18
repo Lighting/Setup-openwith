@@ -6,11 +6,8 @@ before_script:
     - sudo mkdir /ebrmain
     - mkdir /ebrmain/config
     - mkdir /ebrmain/language
-    - mkdir /mnt/ext1
-    - mkdir /mnt/ext1/system
-    - mkdir /mnt/ext1/system/bin
-    - mkdir /mnt/ext1/system/config
-    - mkdir /mnt/ext1/system/config/settings
+    - mkdir --parents /mnt/ext1/system/bin
+    - mkdir --parents /mnt/ext1/system/config/settings
 
 script:
     - sh Setup-openwith.app
