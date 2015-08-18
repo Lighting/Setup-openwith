@@ -3,9 +3,8 @@ language: sh
 sudo: required
 
 before_script:
-    - sudo mkdir /ebrmain
-    - mkdir /ebrmain/config
-    - mkdir /ebrmain/language
+    - sudo mkdir -p /ebrmain/config
+    - sudo mkdir -p /ebrmain/language
     - mkdir -p /mnt/ext1/system/bin
     - mkdir -p /mnt/ext1/system/config/settings
 
