@@ -1,0 +1,131 @@
+[
+			{
+				"id":"bootlogo",
+	            "title_id":"@Boot_logo_V2",
+				"icon_id":"ci_bootlogo",
+		        "control_type":"list",
+				"class_id":"boot_logo",
+				"kind":"text",
+				"values":["custom"],
+				"storage":["${SYSTEM_CONFIG_FILE}, bootlogo"],
+				"custom_enabler"	: [":${THEME}:settings.use_bootlogo:1", ":${THEME}:settings.use_bootlogo:"]
+			},
+			{
+                "id"			:	"offlogo",
+                "title_id"		:	"@Poweroff_logo",
+				"icon_id"		:	"ci_pwroff",
+                "control_type"	:	"list",
+                "class_id"		:	"off_logo",
+                "kind"			:	"text",
+                "values"		:	["custom"],
+                "storage"		:	["${SYSTEM_CONFIG_FILE}, offlogo"]
+            },
+        {
+        "id"            :   "fullscreen_pdf",
+        "title_id"      :   "@Fullscreen_pdf",
+        "icon_id"       :   "ci_fullscreen_pdf_djvu",
+        "control_type"  :   "switch",                   
+        "values"        :   [                 
+                                ":0:@On",             
+                                ":1:@Off"      
+                                ],                  
+        "default"        :   ":0:@On",                                       
+        "storage"        :   ["${SYSTEM_CONFIG_FILE}, pager.graphics.enabled"],        
+    },                   
+        {
+        "id"            :   "fullscreen_txt",
+        "title_id"      :   "@Fullscreen_txt",
+        "icon_id"       :   "ci_fullscreen_txt",
+        "control_type"  :   "switch",                   
+        "values"        :   [                 
+                                ":0:@On",             
+                                ":1:@Off"      
+                                ],                  
+        "default"        :   ":1:@Off",                                       
+        "storage"        :   ["${SYSTEM_CONFIG_FILE}, pager.txt.enabled"],        
+    },                   
+
+        {
+        "id"            :   "status_bar_switch",
+        "title_id"      :   "@Panel_configuration",
+        "icon_id"       :   "ci_panel_config", 
+        "control_type"  :   "switch",                   
+        "values"        :   [                 
+                                ":0:@Off",             
+                                ":1:@On"      
+                                ],                  
+        "default"        :   ":0:@Off",                                       
+        "storage"        :   ["${SYSTEM_CONFIG_FILE}, show_status_bar"],        
+        "custom_enabler"        : [":/var/run/settings.cfg:use_status_bar:1"]
+    },                   
+		{
+		"id"		:	"invertupdate_reader",
+		"title_id"	:	"@Invert_update",
+		"control_type"	:	"list",
+		"icon_id"	:	"ci_image_update",
+		"kind"		:	"number",
+		"values"	:	[
+					":0:@iu_never",
+					":1:@iu_1page",
+					":3:@iu_3pages",
+					":5:@iu_5pages",
+					":10:@iu_10pages"
+					],
+		"default"	:	":10:@iu_10pages",
+		"storage"	:	["${SYSTEM_CONFIG_FILE}, invertupdate"]
+		},	
+
+			{
+				"id"			:	"open_at_startup",
+                "title_id"		:	"@At_start_show",
+                "icon_id"		:	"ci_pwron",
+                "control_type"	:	"list",
+                "values"		:	[
+										":0:@Main_menu",
+										":1:@Last_book"
+									],
+				"default"		:	":1:@Last_book",
+                "storage":["${SYSTEM_CONFIG_FILE}, openlastbook"]
+			},
+			{
+				"id"			:	"theme",
+				"title_id"		:	"@Theme",
+				"icon_id"		:	"ci_theme",
+				"class_id"		:	"theme",
+				"control_type"	:	"list",
+				"kind"			:	"text",
+				"values"		:	["custom"],
+				"custom_enabler"        :	[":/var/run/settings.cfg:hide_themes:",":/var/run/settings.cfg:hide_themes:0"],
+				"storage"		:	["${SYSTEM_CONFIG_FILE}, theme"]
+			},
+	{
+		"id"		:	"led_indicator",
+		"title_id"	:	"@Led_indication",
+		"icon_id"	:	"ci_lamp",
+		"control_type"	:	"switch",
+		"class_id"	:	"led_indicator",
+		"values"	:	[
+							":1:@Off",
+							":0:@On"
+						],
+		"default"	:	":0:@On",
+		"custom_enabler" : [":/var/run/settings.cfg:have_led_indicator:", ":/var/run/settings.cfg:have_led_indicator:1"],
+		"storage"	:	["${SYSTEM_CONFIG_FILE}, ledoff"]
+	},
+			{
+				"id"			:	"personalize_keymapping",
+				"title_id"		:	"@Keys_config",
+				"icon_id"		:	"ci_keys",
+				"control_type"	:	"submenu",
+				"kind"			:	"none",
+				"from_file"		:	"./keymaping.json"
+			},
+	{
+		"id"			:	"user_profiles",
+		"title_id"		:	"@User_profiles",
+        "icon_id"		:	"ci_profiles",
+        "control_type"	:	"custom",
+        "class_id"		:	"profiles",
+		"values"		:	["custom"]
+	}
+]
