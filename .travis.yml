@@ -2,7 +2,7 @@ language: sh
 
 sudo: required
 
-before_script:
+before_install:
     - sudo apt-get -qq install busybox
     - sudo cp -R test-env/ebrmain /
     - sudo mkdir -p /mnt/ext1
@@ -11,5 +11,9 @@ before_script:
 #need to remove
     - sudo chmod +x /ebrmain/bin/dialog
 
+install:
+    - cp --parents Setup-openwith.app /mnt/ext1/applications
+
 script:
-    - busybox sh -x Setup-openwith.app
+    - busybox sh /mnt/ext1/applications/Setup-openwith.app
+    - [ -s /mnt/ext1/system/openwith_remove.app ]
