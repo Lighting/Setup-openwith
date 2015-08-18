@@ -8,7 +8,6 @@ before_install:
     - sudo mkdir -p /mnt/ext1
     - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
 
-#need to remove
     - sudo chmod +x /ebrmain/bin/dialog
 
 install:
