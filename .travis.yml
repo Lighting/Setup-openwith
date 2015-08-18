@@ -4,13 +4,13 @@ sudo: required
 
 before_script:
     - sudo mkdir -p /ebrmain/bin
-    - echo -e '#/bin/sh\necho $@' > /ebrmain/bin/dialog
     - sudo mkdir -p /ebrmain/config
     - sudo mkdir -p /ebrmain/language
     - sudo mkdir -p /mnt/ext1
     - sudo mount --bind ./ /mnt/ext1
     - mkdir -p /mnt/ext1/system/bin
     - mkdir -p /mnt/ext1/system/config/settings
+    - sudo echo -e '#/bin/sh\necho $@' > /ebrmain/bin/dialog
 
 script:
     - sh Setup-openwith.app
