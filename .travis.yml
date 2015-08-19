@@ -13,7 +13,7 @@ install:
     - cp Setup-openwith.app /mnt/ext1/applications/
     
 script:
-    - sh /ebrmain/bin/settings.app &&
+    - /ebrmain/bin/settings.app &
     - busybox sh -x /mnt/ext1/applications/Setup-openwith.app
     - test "-s /mnt/ext1/system/config/settings/personalize.json"
     - test "-s /mnt/ext1/system/config/settings/openwith.json"
@@ -23,7 +23,7 @@ script:
     
     - busybox sh -x /mnt/ext1/system/bin/openwith_apply.app
     - busybox sh -x /mnt/ext1/system/bin/openwith_clear.app
-    - sh /ebrmain/bin/settings.app &&
+    - /ebrmain/bin/settings.app &
     - busybox sh -x /mnt/ext1/system/bin/openwith_remove.app
     - test "-e ! /mnt/ext1/system/config/settings/personalize.json"
     - test "-e ! /mnt/ext1/system/config/settings/openwith.json"
