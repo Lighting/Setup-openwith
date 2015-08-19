@@ -8,17 +8,24 @@ before_install:
     - sudo mkdir -p /mnt/ext1
     - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
 
-    - mkdir -p /mnt/ext1/system/bin
-    - sudo chmod +x /ebrmain/bin/dialog
-
 install:
     - mkdir -p /mnt/ext1/applications
     - cp Setup-openwith.app /mnt/ext1/applications/
-
+    
 script:
-    - busybox sh -x /mnt/ext1/applications/Setup-openwith.app || true
+    - busybox sh -x /mnt/ext1/applications/Setup-openwith.app
     - test -s /mnt/ext1/system/config/settings/personalize.json
     - test -s /mnt/ext1/system/config/settings/openwith.json
     - test -s /mnt/ext1/system/bin/openwith_apply.app
     - test -s /mnt/ext1/system/bin/openwith_clear.app
     - test -s /mnt/ext1/system/bin/openwith_remove.app
+    - busybox sh -x /mnt/ext1/system/bin/openwith_apply.app
+    - busybox sh -x /mnt/ext1/system/bin/openwith_clear.app
+    - busybox sh -x /mnt/ext1/system/bin/openwith_remove.app
+    - test -e ! /mnt/ext1/system/config/settings/personalize.json
+    - test -e ! /mnt/ext1/system/config/settings/openwith.json
+    - test -e ! /mnt/ext1/system/config/settings/openwith.cfg
+    - test -e ! /mnt/ext1/system/bin/openwith_apply.app
+    - test -e ! /mnt/ext1/system/bin/openwith_clear.app
+    - test -e ! /mnt/ext1/system/bin/openwith_remove.app
+    
