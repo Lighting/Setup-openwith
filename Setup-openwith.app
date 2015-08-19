@@ -228,9 +228,9 @@ if [ "$?" = 1 ]; then
   rm -f "'"$SYSTEM_BIN"'/openwith_clear.app"
   rm -f "'"$SYSTEM_BIN"'/openwith_remove.app"
  fi
- killall settings.app
-fi
-sync' > "$SYSTEM_BIN/openwith_remove.app"
+ sync
+ killall settings.app || true
+fi' > "$SYSTEM_BIN/openwith_remove.app"
 
 Get_word w1 "Install_complete"
 Get_word w2 "Delete_book"
@@ -239,4 +239,4 @@ $w2
 (`basename ""$0"" .app`)" "@No" "@Yes"
 [ "$?" = 2 ] && rm -f "$0"
 sync
-killall settings.app
+killall settings.app || true
