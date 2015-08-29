@@ -10,7 +10,7 @@ before_install:
 
 install:
     - mkdir -p /mnt/ext1/applications
-    - cp Setup-openwith.app /mnt/ext1/applications/
+    - mv Setup-openwith.app /mnt/ext1/applications/
     
 script:
     - busybox sh -x /mnt/ext1/applications/Setup-openwith.app
