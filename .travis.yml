@@ -23,9 +23,9 @@ script:
     - busybox sh -x /mnt/ext1/system/bin/openwith_apply.app
     - busybox sh -x /mnt/ext1/system/bin/openwith_clear.app
     - busybox sh -x /mnt/ext1/system/bin/openwith_remove.app
-    - test "-e ! /mnt/ext1/system/config/settings/personalize.json"
-    - test "-e ! /mnt/ext1/system/config/settings/openwith.json"
-    - test "-e ! /mnt/ext1/system/config/settings/openwith.cfg"
-    - test "-e ! /mnt/ext1/system/bin/openwith_apply.app"
-    - test "-e ! /mnt/ext1/system/bin/openwith_clear.app"
-    - test "-e ! /mnt/ext1/system/bin/openwith_remove.app"
+    - ! test -e /mnt/ext1/system/config/settings/personalize.json
+    - ! test -e /mnt/ext1/system/config/settings/openwith.json
+    - ! test -e /mnt/ext1/system/config/settings/openwith.cfg
+    - ! test -e /mnt/ext1/system/bin/openwith_apply.app
+    - ! test -e /mnt/ext1/system/bin/openwith_clear.app
+    - ! test -e /mnt/ext1/system/bin/openwith_remove.app
