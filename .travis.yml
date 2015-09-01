@@ -2,8 +2,12 @@ language: sh
 
 sudo: required
 
+addons:
+  apt:
+    packages:
+    - busybox
+
 before_install:
-    - sudo apt-get -qq install busybox
     - sudo cp -R test-env/ebrmain /
     - sudo mkdir -p /mnt/ext1
     - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
