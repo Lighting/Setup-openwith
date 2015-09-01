@@ -2,6 +2,8 @@ language: sh
 
 sudo: required
 
+cache: apt
+
 addons:
   apt:
     packages:
