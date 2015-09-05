@@ -1,7 +1,6 @@
 [![Build Status][travis-badge]][travis-link]
 [![GitHub release][release-badge]][release-link]
-
-pbtheme [![pbtheme release][pbtheme-badge]][pbtheme-link]
+pbtheme: [![pbtheme release][pbtheme-badge]][pbtheme-link]
 
 Скрипт **Setup-openwith** для электронных книг PocketBook с прошивкой 5.x, настраивающий **Дополнительное меню настроек "Открыть с помощью"**
 ==================================================
