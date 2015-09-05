@@ -2,7 +2,9 @@ language: sh
 
 sudo: required
 
-addons: apt: packages: busybox
+addons:
+  apt:
+    packages: busybox
 
 before_install:
   - sudo cp -R test-env/ebrmain /
