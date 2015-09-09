@@ -10,6 +10,7 @@ before_install:
   - sudo cp -R test-env/ebrmain /
   - sudo mkdir -p /mnt/ext1
   - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
+  - cp -R test-env/tmp/* /tmp
 
 install:
   - mkdir -p /mnt/ext1/applications
