@@ -1,3 +1,4 @@
 #!/bin/sh
 echo "$*"
-[ "${2%% *}" = "Found" ] && exit 2 || exit 1
+[ "Found" = "${2%% *}" ] && exit 2
+exit 1
