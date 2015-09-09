@@ -1,8 +1,6 @@
 [![Build Status][travis-badge]][travis-link]
 [![GitHub release][release-badge]][release-link]
 
-pbtheme: [![pbtheme release][pbtheme-badge]][pbtheme-link]
-
 Скрипт **Setup-openwith** для электронных книг PocketBook с прошивкой 5.x, настраивающий **Дополнительное меню настроек "Открыть с помощью"**
 ==================================================
 **Новое меню дополнительных настроек появится в настройках "Персонализация" -> "Открыть с помощью".**
@@ -41,5 +39,3 @@ pbtheme: [![pbtheme release][pbtheme-badge]][pbtheme-link]
 [travis-link]:https://travis-ci.org/Lighting/Setup-openwith
 [release-badge]:https://badge.fury.io/gh/lighting%2FSetup-openwith.svg
 [release-link]:https://github.com/Lighting/Setup-openwith/releases/latest
-[pbtheme-badge]:https://img.shields.io/github/release/Lighting/pbtheme.svg
-[pbtheme-link]:https://github.com/Lighting/pbtheme/releases
