@@ -34,3 +34,4 @@ script:
   - test "-e ! /mnt/ext1/system/bin/openwith_apply.app"
   - test "-e ! /mnt/ext1/system/bin/openwith_clear.app"
   - test "-e ! /mnt/ext1/system/bin/openwith_remove.app"
+  - test "-e ! /mnt/ext1/system/bin/openwith_fb2.app"
