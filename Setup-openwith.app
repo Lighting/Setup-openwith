@@ -241,21 +241,19 @@ fi' > "$SYSTEM_BIN/openwith_remove.app"
 if [ "$fast_switch" = 1 ]; then
  Get_word w1 "SearchFound"
  Get_reader_name w2 "$FAST_SWITCH_APP"
- Get_word w3 "Delete"
+ Get_word w3 "ChangeWidget"
  Get_word w4 "KA_srch"
- Get_word w5 "Add"
- Get_word w6 "OpenWith"
- Get_word w7 "Sudoku_select"
- Get_word w8 "OpenWithFbreader"
- Get_word w9 "Select"
- Get_word w10 "Settings"
- Get_word w11 "PersonalSettings"
- Get_word w12 "Theme"
+ Get_word w5 "OpenWith"
+ Get_word w6 "Sudoku_select"
+ Get_word w7 "OpenWithFbreader"
+ Get_word w8 "Select"
+ Get_word w9 "Settings"
+ Get_word w10 "PersonalSettings"
+ Get_word w11 "Theme"
  /ebrmain/bin/dialog 2 "" "$w1 $w2
-$w3 \"$w4\, $w5 \"FB2\"?
-$w3:
-$w8 <-> $w2
-($w9 $w10->$w11->$w12:\"OpenWith\")" "@No" "@Yes"
+$w3 \"$w4\": \"FB2\" $w5?
+$w6: $w7 <-> $w2
+($w8 $w9->$w10->$w11:\"OpenWith\")" "@No" "@Yes"
  if [ "$?" = 2 ]; then
   echo 'H4sIAIBwb0UCA61ZDWxT1xW+z3ESxwRqmtCmlLaPNqypSBwDWcsQqxwCJLT8pJCOStAlTvwSezi2
 +94LkKlSDYUVWrJEJdNarVm8jWlMq9RUQtM0wZpptENtpNGWtowyyYnz1DSgLtLQhDbA+8671/jW
