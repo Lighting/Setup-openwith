@@ -356,7 +356,7 @@ Set_default()
  sync
  
  Get_word w1 "SelectBooks"
- /ebrmain/bin/dialog 0 "" "$w2: \"$def_app_name\"" &
+ /ebrmain/bin/dialog 0 "" "$w1: \"$def_app_name\"" &
  sleep 2
  kill $!
  
