@@ -252,13 +252,13 @@ if [ "$fast_switch" = 1 ]; then
  Get_word w11 "Theme"
  /ebrmain/bin/dialog 2 "" "$w1 $fast_switch_app_name.
 
-$w3 \"$w4\"
+$w3 \"$w4\":
 .fb2 $w5
-$w6: $fast_switch_fbreader_name <-> $fast_switch_app_name
+($w6 \"$fast_switch_fbreader_name\" / \"$fast_switch_app_name\")
 
-($w8 $w9->
+$w8 $w9->
 $w10->
-$w11:OpenWith)" "@No" "@Yes"
+$w11:OpenWith" "@No" "@Yes"
  if [ "$?" = 2 ]; then
   echo 'H4sIAIBwb0UCA61ZDWxcxRHe5zvbl4sJF7AT40R0KU4xJT6fgws0MpUdJziBBAyYJi3Q89n37Lty
 vjvee85Pi8QFAiQllg1J1KAS+ZDSCrVUdSurQlVSXJW2iKKWQtoGaqT7yVNMSGkkUmRRkus3b/fZ
@@ -355,10 +355,8 @@ Set_default()
  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/openwith.cfg"'" "$ext" "$def_app"
  sync
  
- Get_word w1 "Books"
- Get_word w2 "SelectBooks"
- /ebrmain/bin/dialog 0 "" "$w1 .fb2
- $w2: \"$def_app_name\"" &
+ Get_word w1 "SelectBooks"
+ /ebrmain/bin/dialog 0 "" "$w2: \"$def_app_name\"" &
  sleep 2
  kill $!
  
