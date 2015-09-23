@@ -24,7 +24,8 @@ script:
   - test -s /mnt/ext1/system/bin/openwith_clear.app
   - test -s /mnt/ext1/system/bin/openwith_remove.app
   - test -s /mnt/ext1/system/bin/openwith_fb2.app
-  
+  - test "`stat -c %s /mnt/ext1/system/bin/pbtheme-openwith`" = 7284
+
   - busybox sh -x /mnt/ext1/system/bin/openwith_apply.app
   - busybox sh -x /mnt/ext1/system/bin/openwith_clear.app
   - busybox sh -x /mnt/ext1/system/bin/openwith_fb2.app
