@@ -355,8 +355,10 @@ Set_default()
  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/openwith.cfg"'" "$ext" "$def_app"
  sync
  
- Get_word w1 "SelectBooks"
- /ebrmain/bin/dialog 0 "" "$w1 $def_app_name" &
+ Get_word w1 "Books"
+ Get_word w2 "SelectBooks"
+ /ebrmain/bin/dialog 0 "" "$w1 .fb2
+ $w2: \"$def_app_name\"" &
  sleep 2
  kill $!
  
