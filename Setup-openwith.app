@@ -325,12 +325,13 @@ Ddr5cgT3K3J0N0LfGPv8F9r7riJHe9PRxef/buDKbVPyYApyU5B71nOh3INCLo0lE78x1Qh7VfPk
 nlDsZSCXqTn/NxKX3id/Z/Ew9zeji8tl5e8iHrmX7vocuRfkuCRHdyd7PkfuJRkTD3N/ixK/Q5XP
 W99fKPZoD961BJNnF67Hq4rcDORmllx8fV+XdklO3B2d75+71G9KOuTqLxW1pcoRvCtszbq0AnLX
 XcSe65v7bIFc8SJy/waBq3QQdBwAAA==' | base64 -d | gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
-  $SYSTEM_BIN/pbtheme-openwith -e "$EBRMAIN_THEME/Line.pbt" /tmp/theme.cfg
+  CURRENT_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' '"$SYSTEM_CONFIG"'/global.cfg`"
+  $SYSTEM_BIN/pbtheme-openwith -e "$EBRMAIN_THEME/$CURRENT_THEME.pbt" /tmp/theme.cfg
   sed -i 's/^\(control\.panel\.shortcut\.5\.icon\.name=\).*$/\1desktop_launcher_library/' /tmp/theme.cfg
   sed -i 's/^\(control\.panel\.shortcut\.5\.focus\.icon\.name=\).*$/\1desktop_launcher_library_f/' /tmp/theme.cfg
   sed -i 's/^\(control\.panel\.shortcut\.5\.text=\).*$/\1fb2/' /tmp/theme.cfg
   sed -i 's:^\(control\.panel\.shortcut\.5\.\)type=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' /tmp/theme.cfg
-  $SYSTEM_BIN/pbtheme-openwith -r "$EBRMAIN_THEME/Line.pbt" /tmp/theme.cfg "$SYSTEM_PATH/themes/OpenWith.pbt"
+  $SYSTEM_BIN/pbtheme-openwith -r "$EBRMAIN_THEME/$CURRENT_THEME.pbt" /tmp/theme.cfg "$SYSTEM_PATH/themes/OpenWith.pbt"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f /tmp/theme.cfg
 #  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_CONFIG/global.cfg" theme "OpenWith"
