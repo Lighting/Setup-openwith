@@ -384,5 +384,7 @@ Get_word w2 "Delete_book"
 $w2
 (`basename ""$0"" .app`)" "@No" "@Yes"
 [ "$?" = 2 ] && rm -f "$0"
+
 sync
-killall settings.app || true
+# SendEventTo ALLTASKS EVT_CONFIGCHANGED
+/ebrmain/bin/iv2sh SendEventTo -1 154
