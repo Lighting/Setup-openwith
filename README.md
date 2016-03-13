@@ -40,5 +40,5 @@
 
 [travis-badge]:https://travis-ci.org/Lighting/Setup-openwith.svg?branch=master
 [travis-link]:https://travis-ci.org/Lighting/Setup-openwith
-[release-badge]:https://badge.fury.io/gh/Lighting%2FSetup-openwith.svg
+[release-badge]:https://img.shields.io/github/release/Lighting/Setup-openwith.svg
 [release-link]:https://github.com/Lighting/Setup-openwith/releases/latest
