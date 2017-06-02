@@ -329,7 +329,7 @@ XcSe65v7bIFc8SJy/waBq3QQdBwAAA==' | base64 -d | gzip -d > "$SYSTEM_BIN/pbtheme-o
   sed -i 's/^\(control\.panel\.shortcut\.5\.icon\.name=\).*$/\1desktop_launcher_library/' /tmp/theme.cfg
   sed -i 's/^\(control\.panel\.shortcut\.5\.focus\.icon\.name=\).*$/\1desktop_launcher_library_f/' /tmp/theme.cfg
   sed -i 's/^\(control\.panel\.shortcut\.5\.text=\).*$/\1fb2/' /tmp/theme.cfg
-  sed -i 's:^\(control\.panel\.shortcut\.5\.\)type=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' /tmp/theme.cfg
+  sed -i 's:^\(control\.panel\.shortcut\.5\.\)(type|path)=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' /tmp/theme.cfg
   $SYSTEM_BIN/pbtheme-openwith -r "$EBRMAIN_THEME/Line.pbt" /tmp/theme.cfg "$SYSTEM_PATH/themes/OpenWith.pbt"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f /tmp/theme.cfg
