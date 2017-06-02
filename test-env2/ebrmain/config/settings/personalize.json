@@ -1,0 +1,125 @@
+[
+    {
+        "id": "bootlogo",
+        "title_id": "@Boot_logo_V2",
+        "icon_id": "ci_bootlogo",
+        "control_type": "list",
+        "class_id": "boot_logo",
+        "kind": "text",
+        "values": [
+            "custom"
+        ],
+        "storage": [
+            "${SYSTEM_CONFIG_FILE}, bootlogo"
+        ],
+        "custom_enabler": [
+            ":${THEME}:settings.use_bootlogo:1",
+            ":/var/run/settings.cfg:use_bootlogo:1"
+        ]
+    },
+    {
+        "id": "offlogo",
+        "title_id": "@Poweroff_logo",
+        "icon_id": "ci_pwroff",
+        "control_type": "list",
+        "class_id": "off_logo",
+        "kind": "text",
+        "values": [
+            "custom"
+        ],
+        "storage": [
+            "${SYSTEM_CONFIG_FILE}, offlogo"
+        ]
+    },
+    {
+        "id": "invertupdate_reader",
+        "title_id": "@Invert_update",
+        "control_type": "list",
+        "icon_id": "ci_image_update",
+        "kind": "number",
+        "values": [
+            ":0:@iu_never",
+            ":1:@iu_1page",
+            ":3:@iu_3pages",
+            ":5:@iu_5pages",
+            ":10:@iu_10pages"
+        ],
+        "default": ":10:@iu_10pages",
+        "storage": [
+            "${SYSTEM_CONFIG_FILE}, invertupdate"
+        ]
+    },
+    {
+        "id": "open_at_startup",
+        "title_id": "@At_start_show",
+        "icon_id": "ci_pwron",
+        "control_type": "list",
+        "values": [
+            ":0:@Main_menu",
+            ":1:@Last_book"
+        ],
+        "default": ":1:@Last_book",
+        "storage": [
+            "${SYSTEM_CONFIG_FILE}, openlastbook"
+        ]
+    },
+    {
+        "id": "theme",
+        "title_id": "@Theme",
+        "icon_id": "ci_theme",
+        "class_id": "theme",
+        "control_type": "list",
+        "kind": "text",
+        "values": [
+            "custom"
+        ],
+        "custom_enabler": [
+            ":/var/run/settings.cfg:hide_themes:",
+            ":/var/run/settings.cfg:hide_themes:0"
+        ],
+        "storage": [
+            "${SYSTEM_CONFIG_FILE}, theme"
+        ]
+    },
+    {
+        "id": "led_indicator",
+        "title_id": "@Led_indication",
+        "icon_id": "ci_lamp",
+        "control_type": "switch",
+        "class_id": "led_indicator",
+        "values": [
+            ":1:@Off",
+            ":0:@On"
+        ],
+        "default": ":0:@On",
+        "custom_enabler": [
+            ":/var/run/settings.cfg:have_led_indicator:",
+            ":/var/run/settings.cfg:have_led_indicator:1"
+        ],
+        "storage": [
+            "${SYSTEM_CONFIG_FILE}, ledoff"
+        ]
+    },
+    {
+        "id": "personalize_keymapping",
+        "title_id": "@Keys_config",
+        "icon_id": "ci_keys",
+        "control_type": "submenu",
+        "kind": "none",
+        "from_file": "./keymaping.json"
+    },
+    {
+        "id": "user_profiles",
+        "title_id": "@User_profiles",
+        "icon_id": "ci_profiles",
+        "control_type": "custom",
+        "class_id": "profiles",
+        "values": [
+            "custom"
+        ],
+        "custom_enabler": [
+            ":/ebrmain/config/device.cfg:settings.profiles:",
+            ":/ebrmain/config/device.cfg:settings.profiles:1"
+        ]
+    }
+]

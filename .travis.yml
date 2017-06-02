@@ -6,10 +6,14 @@ addons:
   apt:
     packages: busybox
 
+env:
+  - TEST_ENV=test-env
+  - TEST_ENV=test-env2
+
 before_install:
-  - sudo cp -R test-env/ebrmain /
+  - sudo cp -R $TEST_ENV/ebrmain /
   - sudo mkdir -p /mnt/ext1
-  - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
+  - sudo mount --bind $TEST_ENV/mnt/ext1 /mnt/ext1
   - cp -R test-env/tmp/* /tmp
 
 install:
@@ -18,6 +22,7 @@ install:
     
 script:
   - busybox sh -x /mnt/ext1/applications/Setup-openwith.app
+  - test "-e ! /mnt/ext1/applications/Setup-openwith.app"
   - test -s /mnt/ext1/system/config/settings/personalize.json
   - test -s /mnt/ext1/system/config/settings/openwith.json
   - test -s /mnt/ext1/system/bin/openwith_apply.app
