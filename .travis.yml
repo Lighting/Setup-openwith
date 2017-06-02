@@ -7,8 +7,8 @@ addons:
     packages: busybox
 
 env:
-  EBRMAIN=test-env/ebrmain
-  EBRMAIN=test-env2/ebrmain
+  - EBRMAIN=test-env/ebrmain
+  - EBRMAIN=test-env2/ebrmain
 
 before_install:
   - sudo cp -R $EBRMAIN /
