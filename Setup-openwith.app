@@ -28,11 +28,11 @@ SYSTEM_PATH="/mnt/ext1/system"
 SYSTEM_BIN="$SYSTEM_PATH/bin"
 SYSTEM_CONFIG="$SYSTEM_PATH/config"
 SYSTEM_SETTINGS="$SYSTEM_CONFIG/settings"
-LNG="`awk -F= '/^language=/ {print $2}' "$SYSTEM_CONFIG/global.cfg"`"
+LNG="`awk -F= '/^language=/ {print $2}' "$SYSTEM_CONFIG/global.cfg"|tr -d '\r'`"
 
 Get_word()
 {
- w="`awk -F= '/^'"$2"'=/ {print $2}' "$EBRMAIN_LANG/${LNG:-en}.txt"`"
+ w="`awk -F= '/^'"$2"'=/ {print $2}' "$EBRMAIN_LANG/${LNG:-en}.txt"|tr -d '\r'`"
  eval "$1=\"${w:-$2}\""
 }
 
@@ -60,7 +60,7 @@ Get_reader_name()
 
 extensions=""
 count=1
-for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"`; do
+for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"|tr -d '\r'`; do
  ext="${str%%:*}"
  apps="`echo "$str" | cut -d : -f4`"
  [ "$ext" = "fb2" -a "$apps" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app=$ALTERNATE_SWITCH_APP
@@ -71,7 +71,7 @@ for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"`; do
 done
 extensions=${extensions:1}
 
-for str in `awk /:/ "$SYSTEM_CONFIG/extensions.cfg"`; do
+for str in `awk /:/ "$SYSTEM_CONFIG/extensions.cfg"|tr -d '\r'`; do
  ext="${str%%:*}"
  [ "$extensions" = "${extensions/,$ext}" ] && extensions="$extensions,$ext" && continue
  count=1
