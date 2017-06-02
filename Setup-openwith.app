@@ -167,28 +167,28 @@ Set_default()
 {
  apps="`echo "$str" | cut -d : -f4`"
  new_apps="$def_app`echo ",$apps" | sed "s/,*$def_app//g" | sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG/extensions.cfg"'"
+ sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG"'/extensions.cfg"
 }
 
 while read def_str; do
  apply=0
  def_ext="${def_str%%=*}"
  def_app="${def_str#*=}"
- for str in `awk /:/ "'"$SYSTEM_CONFIG/extensions.cfg"'"`; do
+ for str in `awk /:/ "'"$SYSTEM_CONFIG"'/extensions.cfg"`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
   Set_default
   apply=1
  done
  if [ $apply = 0 ]; then
- for str in `awk /:/ "'"$EBRMAIN_CONFIG/extensions.cfg"'"`; do
+ for str in `awk /:/ "'"$EBRMAIN_CONFIG"'/extensions.cfg"`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
-  echo "$str" >> "'"$SYSTEM_CONFIG/extensions.cfg"'"
+  echo "$str" >> "'"$SYSTEM_CONFIG"'/extensions.cfg"
   Set_default
  done
  fi
-done < "'"$SYSTEM_CONFIG/openwith.cfg"'"
+done < "'"$SYSTEM_CONFIG"'/openwith.cfg"
 sync' > "$SYSTEM_BIN/openwith_apply.app"
 
 echo '#!/bin/sh
@@ -330,10 +330,10 @@ kqO7kkc+Re7XMiYkJ36XEr9JuRU5mtdvFX20B49fjsnP00fwe0XORb+9LF14fZ+XeklO3BWd7195
 qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA' | base64 -d | gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
   CURRENT_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' '"$SYSTEM_CONFIG"'/global.cfg`"
   $SYSTEM_BIN/pbtheme-openwith -e "$EBRMAIN_THEME/${CURRENT_THEME:-Line}.pbt" /tmp/theme.cfg
-  sed -i 's/^\(control\.panel\.shortcut\.5\.icon\.name=\).*$/\1desktop_launcher_library/' /tmp/theme.cfg
-  sed -i 's/^\(control\.panel\.shortcut\.5\.focus\.icon\.name=\).*$/\1desktop_launcher_library_f/' /tmp/theme.cfg
-  sed -i 's/^\(control\.panel\.shortcut\.5\.text=\).*$/\1fb2/' /tmp/theme.cfg
-  sed -i 's:^\(control\.panel\.shortcut\.5\.\)type=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' /tmp/theme.cfg
+  sed -i 's/^(control\.panel\.shortcut\.5\.icon\.name=).*$/\1desktop_launcher_library/' /tmp/theme.cfg
+  sed -i 's/^(control\.panel\.shortcut\.5\.focus\.icon\.name=).*$/\1desktop_launcher_library_f/' /tmp/theme.cfg
+  sed -i 's/^(control\.panel\.shortcut\.5\.text=).*$/\1fb2/' /tmp/theme.cfg
+  sed -i 's:^(control\.panel\.shortcut\.5\.)(type|path)=.*$:\1path='"$SYSTEM_BIN"'/openwith_fb2.app:' /tmp/theme.cfg
   $SYSTEM_BIN/pbtheme-openwith -r "$EBRMAIN_THEME/${CURRENT_THEME:-Line}.pbt" /tmp/theme.cfg "$SYSTEM_PATH/themes/OpenWith.pbt"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f /tmp/theme.cfg
@@ -367,15 +367,15 @@ Set_default()
  exit 0
 }
 
-for str in `awk /:/ "'"$SYSTEM_CONFIG/extensions.cfg"'"`; do
+for str in `awk /:/ "'"$SYSTEM_CONFIG"'/extensions.cfg"`; do
  ext="${str%%:*}"
  [ "$ext" != "fb2" ] && continue
  Set_default
 done
-for str in `awk /:/ "'"$EBRMAIN_CONFIG/extensions.cfg"'"`; do
+for str in `awk /:/ "'"$EBRMAIN_CONFIG"'/extensions.cfg"`; do
  ext="${str%%:*}"
  [ "$ext" != "fb2" ] && continue
- echo "$str" >> "'"$SYSTEM_CONFIG/extensions.cfg"'"
+ echo "$str" >> "'"$SYSTEM_CONFIG"'/extensions.cfg"
  Set_default
 done' > "$SYSTEM_BIN/openwith_fb2.app"
  fi
