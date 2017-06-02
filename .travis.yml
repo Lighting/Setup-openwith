@@ -7,13 +7,13 @@ addons:
     packages: busybox
 
 env:
-  - EBRMAIN=test-env/ebrmain
-  - EBRMAIN=test-env2/ebrmain
+  - TEST_ENV=test-env
+  - TEST_ENV=test-env2
 
 before_install:
-  - sudo cp -R $EBRMAIN /
+  - sudo cp -R $TEST_ENV/ebrmain /
   - sudo mkdir -p /mnt/ext1
-  - sudo mount --bind test-env/mnt/ext1 /mnt/ext1
+  - sudo mount --bind $TEST_ENV/mnt/ext1 /mnt/ext1
   - cp -R test-env/tmp/* /tmp
 
 install:
