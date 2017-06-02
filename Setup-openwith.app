@@ -189,7 +189,7 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/global.cfg"'" theme ""
   rm -f "'"$SYSTEM_PATH/themes/OpenWith.pbt"'"
-  rm -f "'"$SYSTEM_PATH/themes"'/*-OpenWith.pbt"
+  rm -f '"$SYSTEM_PATH/themes"'/"*-OpenWith.pbt
  fi
  sync
  killall settings.app || true
