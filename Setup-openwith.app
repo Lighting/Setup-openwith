@@ -237,7 +237,7 @@ if [ "$?" = 1 ]; then
   rm -f "'"$SYSTEM_PATH"'/themes/OpenWith.pbt"
  fi
  sync
- killall settings.app || true
+ /ebrmain/bin/iv2sh SendEventTo -1 154
 fi' > "$SYSTEM_BIN/openwith_remove.app"
 
 if [ "$fast_switch" = 1 ]; then
