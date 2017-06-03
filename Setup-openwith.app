@@ -223,7 +223,8 @@ while read def_str; do
  done
  fi
 done < "'"$SYSTEM_CONFIG/openwith.cfg"'"
-sync' > "$SYSTEM_BIN/openwith_apply.app"
+sync
+/ebrmain/bin/iv2sh SendEventTo -1 154' > "$SYSTEM_BIN/openwith_apply.app"
 
 echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' '"$SYSTEM_CONFIG/global.cfg"'`"
@@ -369,10 +370,11 @@ Set_default()
  sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG/extensions.cfg"'"
  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/openwith.cfg"'" "$ext" "$def_app"
  sync
- 
+  
  Get_word w1 "@SelectBooks"
  Get_word w2 "$def_app_name"
  /ebrmain/bin/dialog 0 "" "$w1: \"$w2\"" "" "" &
+ /ebrmain/bin/iv2sh SendEventTo -1 154
  sleep 2
  kill $!
  
