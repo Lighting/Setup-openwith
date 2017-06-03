@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # Setup-openwith script by Lit
-# Version 1.4
+# Version 1.4.1
 # https://github.com/Lighting/Setup-openwith
 #
-VERSION="1.4"
+VERSION="1.4.1"
 
 # --------------------------------------------------------------------------
 # List of known readers names
