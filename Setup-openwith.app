@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # Setup-openwith script by Lit
-# Version 1.4.2
+# Version 1.4.3
 # https://github.com/Lighting/Setup-openwith
 #
-VERSION="1.4.2"
+VERSION="1.4.3"
 
 # --------------------------------------------------------------------------
 # List of known readers names
@@ -63,7 +63,6 @@ count=1
 for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"|tr -d '\r'`; do
  ext="${str%%:*}"
  apps="`echo "$str"|cut -d : -f4`"
- [ "$ext" = "fb2" -a "$apps" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
  extensions="$extensions,$ext"
  eval "APP_EXT$count=\"$apps\""
  [ "$apps" != "${apps/,}" ] && eval "APP_SYS$count=1"
@@ -121,6 +120,7 @@ count=0
 for ext in $extensions; do
  count="`expr $count + 1`"
  eval "apps=\"\$APP_EXT$count\""
+ [ "$ext" = "fb2" -a "${apps/$ALTERNATE_SWITCH_APP}" != "$apps" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
  [ "$apps" = "${apps/,}" ] && continue
  reader_app_first="${apps%%,*}"
  Get_reader_name reader_name_first "$reader_app_first"
