@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # Setup-openwith script by Lit
-# Version 1.4.1
+# Version 1.4.2
 # https://github.com/Lighting/Setup-openwith
 #
-VERSION="1.4.1"
+VERSION="1.4.2"
 
 # --------------------------------------------------------------------------
 # List of known readers names
@@ -49,7 +49,7 @@ Get_reader_name()
  app_count=1
  for app in $READERS_APPS; do
   if [ "$app" = "$2" ]; then
-   app_name="`echo "$READERS_NAMES" | cut -d , -f$app_count`"
+   app_name="`echo "$READERS_NAMES"|cut -d , -f$app_count`"
    eval "$1=\"$app_name\""
    return
   fi
@@ -62,8 +62,8 @@ extensions=""
 count=1
 for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"|tr -d '\r'`; do
  ext="${str%%:*}"
- apps="`echo "$str" | cut -d : -f4`"
- [ "$ext" = "fb2" -a "$apps" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app=$ALTERNATE_SWITCH_APP
+ apps="`echo "$str"|cut -d : -f4`"
+ [ "$ext" = "fb2" -a "$apps" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
  extensions="$extensions,$ext"
  eval "APP_EXT$count=\"$apps\""
  [ "$apps" != "${apps/,}" ] && eval "APP_SYS$count=1"
@@ -76,7 +76,7 @@ for str in `awk /:/ "$SYSTEM_CONFIG/extensions.cfg"|tr -d '\r'`; do
  [ "$extensions" = "${extensions/,$ext}" ] && extensions="$extensions,$ext" && continue
  count=1
  IFS=,
- apps="`echo "$str" | cut -d : -f4`"
+ apps="`echo "$str"|cut -d : -f4`"
  for ext_def in $extensions; do
   if [ "$ext_def" = "$ext" ]; then
    eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
@@ -88,7 +88,7 @@ for str in `awk /:/ "$SYSTEM_CONFIG/extensions.cfg"|tr -d '\r'`; do
 done
 
 mkdir -p "$SYSTEM_SETTINGS"
-sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' "$EBRMAIN_CONFIG/settings/personalize.json" | head -n -1 > "$SYSTEM_SETTINGS/personalize.json"
+sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' "$EBRMAIN_CONFIG/settings/personalize.json"|head -n -1 > "$SYSTEM_SETTINGS/personalize.json"
 echo -e ',
 \t{
 \t\t"control_type" : "submenu",
@@ -163,11 +163,11 @@ echo -e '\t{
 ]' >> "$SYSTEM_SETTINGS/openwith.json"
 
 echo '#!/bin/sh
-LNG="`awk -F= '\''/^language=/ {print $2}'\'' '"$SYSTEM_CONFIG/global.cfg"'`"
+LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_CONFIG/global.cfg"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
- w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"`"
+ w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
  eval "$1=\"${w:-$2}\""
 }
 
@@ -189,7 +189,7 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/global.cfg"'" theme ""
   rm -f "'"$SYSTEM_PATH/themes/OpenWith.pbt"'"
-  rm -f "'"$SYSTEM_PATH/themes"'/"*-OpenWith.pbt
+  rm -f "'"$SYSTEM_PATH"'/themes/"*-OpenWith.pbt
  fi
  sync
  killall settings.app || true
@@ -199,8 +199,8 @@ fi' > "$SYSTEM_BIN/openwith_remove.app"
 echo '#!/bin/sh
 Set_default()
 {
- apps="`echo "$str" | cut -d : -f4`"
- new_apps="$def_app`echo ",$apps" | sed "s/,*$def_app//g" | sed s/,,*/,/g`"
+ apps="`echo "$str"|cut -d : -f4`"
+ new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
  sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG/extensions.cfg"'"
 }
 
@@ -227,11 +227,11 @@ sync
 /ebrmain/bin/iv2sh SendEventTo -1 154' > "$SYSTEM_BIN/openwith_apply.app"
 
 echo '#!/bin/sh
-LNG="`awk -F= '\''/^language=/ {print $2}'\'' '"$SYSTEM_CONFIG/global.cfg"'`"
+LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_CONFIG/global.cfg"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
- w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"`"
+ w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
  eval "$1=\"${w:-$2}\""
 }
 
@@ -336,7 +336,7 @@ huNBZDjWD6tJaBNa+kyT0V5B+7bQGbEsI9aXtnTzv19byjVaAcot5/5fE/lTfsqrQ7xaKefc02si
 1TrtFcEasW/Mj1+vIufUCBCXdr4cwR2KHN2FdGJxsnUX6vu2Ikd7U27J+b8hlOXuZJU8mIHcDOQe
 r75Q7i4hl8KSid+bGoQ+7zy5Hyj6DkDuQMP5v5eU8XEmfnMhU+L3o4Xlskz8RuLshZAb/xS5p6Vd
 kqO7kkc+Re7XMiYkJ36XEr9JuRU5mtdvFX20B49fjsnP00fwe0XORb+9LF14fZ+XeklO3BWd7195
-qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA' | base64 -d | gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
+qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
   if [ "$current_theme" = "Line" ]; then
 	current_theme_path="$EBRMAIN_THEME/Line.pbt"
   else
@@ -352,21 +352,21 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA' | base64 -d | gzip -d 
   rm -f /tmp/theme.cfg
 #  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_CONFIG/global.cfg" theme "$openwith_theme"
   echo '#!/bin/sh
-LNG="`awk -F= '\''/^language=/ {print $2}'\'' '"$SYSTEM_CONFIG/global.cfg"'`"
+LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_CONFIG/global.cfg"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
- w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"`"
+ w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
  eval "$1=\"${w:-$2}\""
 }
 
 Set_default()
 {
- apps="`echo "$str" | cut -d : -f4`"
+ apps="`echo "$str"|cut -d : -f4`"
  def_app="'"$default_switch_app"'"
  def_app_name="'"$default_switch_app_name"'"
  [ "$def_app" = "${apps%%,*}" ] && def_app="'"$FAST_SWITCH_APP"'" && def_app_name="'"$fast_switch_app_name"'"
- new_apps="$def_app`echo ",$apps" | sed "s/,*$def_app//g" | sed s/,,*/,/g`"
+ new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
  sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG/extensions.cfg"'"
  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/openwith.cfg"'" "$ext" "$def_app"
  sync
@@ -381,12 +381,12 @@ Set_default()
  exit 0
 }
 
-for str in `awk /:/ "'"$SYSTEM_CONFIG/extensions.cfg"'"`; do
+for str in `awk /:/ "'"$SYSTEM_CONFIG/extensions.cfg"'"|tr -d '\''\r'\''`; do
  ext="${str%%:*}"
  [ "$ext" != "fb2" ] && continue
  Set_default
 done
-for str in `awk /:/ "'"$EBRMAIN_CONFIG/extensions.cfg"'"`; do
+for str in `awk /:/ "'"$EBRMAIN_CONFIG/extensions.cfg"'"|tr -d '\''\r'\''`; do
  ext="${str%%:*}"
  [ "$ext" != "fb2" ] && continue
  echo "$str" >> "'"$SYSTEM_CONFIG/extensions.cfg"'"
