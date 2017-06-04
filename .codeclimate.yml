@@ -1,8 +1,9 @@
+---
 engines:
   shellcheck:
     enabled: true
 ratings:
   paths:
-  - "Setup-openwith.app"
-  exclude_paths:
-- "test-env*/**"
+    - "Setup-openwith.app"
+exclude_paths:
+  - test-env*/**
