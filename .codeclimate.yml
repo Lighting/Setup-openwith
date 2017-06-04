@@ -4,6 +4,6 @@ engines:
     enabled: true
 ratings:
   paths:
-    - "Setup-openwith.app"
+    - "**.app"
 exclude_paths:
   - test-env*/**
