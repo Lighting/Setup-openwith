@@ -2,5 +2,8 @@
 engines:
   shellcheck:
     enabled: true
+ratings:
+  paths:
+    - "**.app"
 exclude_paths:
   - test-env*/**
