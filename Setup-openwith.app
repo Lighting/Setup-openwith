@@ -2,33 +2,86 @@
 #
 # Setup-openwith script by Lit
 # Version 1.5
+VERSION="1.5"
 # https://github.com/Lighting/Setup-openwith
 #
-VERSION="1.5"
 
 # --------------------------------------------------------------------------
 # List of known readers names
 #
-# READERS_APPS - list of readers executable files (/mnt/ext1/system/bin/)
-# READERS_NAMES - list of readers full names
+# READERS_APPS - list of readers executable files (in bin/ directory)
+# READERS_NAMES - list of readers title names
 #
 READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app"
 READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader"
 #
+READER1-EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT2="cgi:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT3="chm:@Z_HTML_file:1:cr3-pb.app:ICON_CHM"
+READER1-EXT4="epub:@EPUB_file:1:cr3-pb.app:ICON_EPUB"
+READER1-EXT5="fb2:@FB2_file:1:cr3-pb.app:ICON_FB2"
+READER1-EXT6="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT7="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT8="jsp:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT9="mht:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT10="php:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT11="pl:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER1-EXT12="rtf:@RTF_file:1:cr3-pb.app:ICON_RTF"
+READER1-EXT13="txt:@Text_file:1:cr3-pb.app:ICON_TXT"
+READER2-EXT1="tar:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT2="tar.gz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT3="tgz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT4="tar.bz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT5="tbz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT6="zip:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT7="cbz:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT8="rar:@RAR_file:1:pbimageviewer.app:ICON_JPG"
+READER2-EXT9="cbr:@RAR_file:1:pbimageviewer.app:ICON_JPG"
+READER3-EXT1="7z:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER3-EXT2="cb7:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER3-EXT3="cbt:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER4-EXT1="jpg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
+READER4-EXT2="jpeg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
+READER4-EXT3="png:@PNG_image:2:pbimageviewer.app:ICON_PNG"
+READER4-EXT4="bmp:@BMP_image:2:pbimageviewer.app:ICON_BMP"
+READER4-EXT5="tif:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
+READER4-EXT6="tiff:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
+READER5-EXT1="pdf:@PDF_file:1:koreader.app:ICON_PDF"
+READER5-EXT2="djvu:@DJVU_file:1:koreader.app:ICON_DJVU"
+READER5-EXT3="epub:@EPUB_file:1:koreader.app:ICON_EPUB"
+READER5-EXT4="fb2:@FB2_file:1:koreader.app:ICON_FB2"
+READER5-EXT5="mobi:@MOBI_file:1:koreader.app:ICON_MOBI"
+READER5-EXT6="zip:@ZIP_file:1:koreader.app:ICON_ZIP"
+READER5-EXT7="cbz:@ZIP_file:1:koreader.app:ICON_ZIP"
 # --------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------
+# Fast-switch feature for .fb2 extension
+#
+# FAST_SWITCH_APP - new app for fast-switch
+# default_switch_app - default app switched with new app and vice versa
+# ALTERNATE_SWITCH_APP - alternate default app if founded for .fb2 extension
+# FAST_SWITCH_SHORTCUT - element in theme replaced by fast-switch
+#
 FAST_SWITCH_APP="cr3-pb.app"
 default_switch_app="fbreader.app"
 ALTERNATE_SWITCH_APP="eink-reader.app"
+FAST_SWITCH_SHORTCUT='control\.panel\.shortcut\.5'
+# --------------------------------------------------------------------------
 
+DEFAULT_THEME="Line"
+TEMP_THEME_CFG="/tmp/theme.cfg"
 EBRMAIN_CONFIG="/ebrmain/config"
 EBRMAIN_LANG="/ebrmain/language"
 EBRMAIN_THEME="/ebrmain/themes"
 SYSTEM_PATH="/mnt/ext1/system"
 SYSTEM_BIN="$SYSTEM_PATH/bin"
-SYSTEM_CONFIG="$SYSTEM_PATH/config"
-SYSTEM_SETTINGS="$SYSTEM_CONFIG/settings"
-LNG="`awk -F= '/^language=/ {print $2}' "$SYSTEM_CONFIG/global.cfg"|tr -d '\r'`"
+SYSTEM_SETTINGS="$SYSTEM_PATH/config/settings"
+EBRMAIN_EXTENSIONS_CFG="$EBRMAIN_CONFIG/extensions.cfg"
+SYSTEM_EXTENSIONS_CFG="$SYSTEM_PATH/config/extensions.cfg"
+SYSTEM_GLOBAL_CFG="$SYSTEM_PATH/config/global.cfg"
+SYSTEM_OPENWITH_CFG="$SYSTEM_PATH/config/openwith.cfg"
+LNG="`awk -F= '/^language=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
 
 Get_word()
 {
@@ -60,7 +113,7 @@ Get_reader_name()
 
 extensions=""
 count=1
-for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"|tr -d '\r'`; do
+for str in `awk /:/ "$EBRMAIN_EXTENSIONS_CFG"|tr -d '\r'`; do
  ext="${str%%:*}"
  apps="`echo "$str"|cut -d : -f4`"
  extensions="$extensions,$ext"
@@ -70,7 +123,7 @@ for str in `awk /:/ "$EBRMAIN_CONFIG/extensions.cfg"|tr -d '\r'`; do
 done
 extensions=${extensions:1}
 
-for str in `awk /:/ "$SYSTEM_CONFIG/extensions.cfg"|tr -d '\r'`; do
+for str in `awk /:/ "$SYSTEM_EXTENSIONS_CFG"|tr -d '\r'`; do
  ext="${str%%:*}"
  [ "$extensions" = "${extensions/,$ext}" ] && extensions="$extensions,$ext" && continue
  count=1
@@ -150,7 +203,7 @@ for ext in $extensions; do
  echo -e '"
 \t},' >> "$SYSTEM_SETTINGS/openwith.json"
  eval "reader_app_def=\"\$APP_DEF$count\""
- [ -z "$reader_app_def" ] || /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_CONFIG/openwith.cfg" "$ext" "$reader_app_def"
+ [ -z "$reader_app_def" ] || /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
 done
 
 echo -e '\t{
@@ -163,7 +216,7 @@ echo -e '\t{
 ]' >> "$SYSTEM_SETTINGS/openwith.json"
 
 echo '#!/bin/sh
-LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_CONFIG/global.cfg"'"|tr -d '\''\r'\''`"
+LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
@@ -180,14 +233,14 @@ $w2
 if [ "$?" = "1" ]; then
  rm -f "'"$SYSTEM_SETTINGS/personalize.json"'"
  rm -f "'"$SYSTEM_SETTINGS/openwith.json"'"
- rm -f "'"$SYSTEM_CONFIG/openwith.cfg"'"
+ rm -f "'"$SYSTEM_OPENWITH_CFG"'"
  openwith="'"$SYSTEM_PATH"'/profiles/*/config/settings/openwith.json"
  if [ "$openwith" = "`echo $openwith`" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_apply.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_clear.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_remove.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
-  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/global.cfg"'" theme ""
+  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
   rm -f "'"$SYSTEM_PATH/themes/OpenWith.pbt"'"
   rm -f "'"$SYSTEM_PATH"'/themes/"*-OpenWith.pbt
  fi
@@ -201,33 +254,33 @@ Set_default()
 {
  apps="`echo "$str"|cut -d : -f4`"
  new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG/extensions.cfg"'"
+ sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_EXTENSIONS_CFG"'"
 }
 
 while read def_str; do
  apply=0
  def_ext="${def_str%%=*}"
  def_app="${def_str#*=}"
- for str in `awk /:/ "'"$SYSTEM_CONFIG/extensions.cfg"'"`; do
+ for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
   Set_default
   apply=1
  done
  if [ $apply = 0 ]; then
- for str in `awk /:/ "'"$EBRMAIN_CONFIG/extensions.cfg"'"`; do
+ for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
-  echo "$str" >> "'"$SYSTEM_CONFIG/extensions.cfg"'"
+  echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
   Set_default
  done
  fi
-done < "'"$SYSTEM_CONFIG/openwith.cfg"'"
+done < "'"$SYSTEM_OPENWITH_CFG"'"
 sync
 /ebrmain/bin/iv2sh SendEventTo -1 154' > "$SYSTEM_BIN/openwith_apply.app"
 
 echo '#!/bin/sh
-LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_CONFIG/global.cfg"'"|tr -d '\''\r'\''`"
+LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
@@ -244,8 +297,8 @@ $w2 - $w3
 [ "$?" = 1 ] && rm -f /mnt/ext1/system/config/handlers.cfg && sync' > "$SYSTEM_BIN/openwith_clear.app"
 
 if [ "$fast_switch" = "1" ]; then
- GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_CONFIG/global.cfg"|tr -d '\r'`"
- current_theme="${GLOBAL_THEME:-Line}"
+ GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
+ current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
  openwith_theme="$current_theme-OpenWith"
  Get_word w1 "@SearchFound"
  Get_word w2 "@Theme"
@@ -337,22 +390,22 @@ huNBZDjWD6tJaBNa+kyT0V5B+7bQGbEsI9aXtnTzv19byjVaAcot5/5fE/lTfsqrQ7xaKefc02si
 r75Q7i4hl8KSid+bGoQ+7zy5Hyj6DkDuQMP5v5eU8XEmfnMhU+L3o4Xlskz8RuLshZAb/xS5p6Vd
 kqO7kkc+Re7XMiYkJ36XEr9JuRU5mtdvFX20B49fjsnP00fwe0XORb+9LF14fZ+XeklO3BWd7195
 qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
-  if [ "$current_theme" = "Line" ]; then
-	current_theme_path="$EBRMAIN_THEME/Line.pbt"
+  if [ "$current_theme" = "$DEFAULT_THEME" ]; then
+	current_theme_path="$EBRMAIN_THEME/$DEFAULT_THEME.pbt"
   else
     current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
   fi
-  $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" /tmp/theme.cfg
-  sed -i 's/^\(control\.panel\.shortcut\.5\.icon\.name=\).*$/\1desktop_launcher_library/' /tmp/theme.cfg
-  sed -i 's/^\(control\.panel\.shortcut\.5\.focus\.icon\.name=\).*$/\1desktop_launcher_library_f/' /tmp/theme.cfg
-  sed -i 's/^\(control\.panel\.shortcut\.5\.text=\).*$/\1fb2/' /tmp/theme.cfg
-  sed -i 's:^\(control\.panel\.shortcut\.5\.\)\(type\|path\)=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' /tmp/theme.cfg
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" /tmp/theme.cfg "$SYSTEM_PATH/themes/$openwith_theme.pbt"
+  $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
+  sed -i 's/^\('"$FAST_SWITCH_SHORTCUT"'\.icon\.name=\).*$/\1desktop_launcher_library/' "$TEMP_THEME_CFG"
+  sed -i 's/^\('"$FAST_SWITCH_SHORTCUT"'\.focus\.icon\.name=\).*$/\1desktop_launcher_library_f/' "$TEMP_THEME_CFG"
+  sed -i 's/^\('"$FAST_SWITCH_SHORTCUT"'\.text=\).*$/\1fb2/' "$TEMP_THEME_CFG"
+  sed -i 's:^\('"$FAST_SWITCH_SHORTCUT"'\.\)\(type\|path\)=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' "$TEMP_THEME_CFG"
+  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.pbt"
   rm -f $SYSTEM_BIN/pbtheme-openwith
-  rm -f /tmp/theme.cfg
-#  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_CONFIG/global.cfg" theme "$openwith_theme"
+  rm -f "$TEMP_THEME_CFG"
+#  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_GLOBAL_CFG" theme "$openwith_theme"
   echo '#!/bin/sh
-LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_CONFIG/global.cfg"'"|tr -d '\''\r'\''`"
+LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
@@ -367,8 +420,8 @@ Set_default()
  def_app_name="'"$default_switch_app_name"'"
  [ "$def_app" = "${apps%%,*}" ] && def_app="'"$FAST_SWITCH_APP"'" && def_app_name="'"$fast_switch_app_name"'"
  new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_CONFIG/extensions.cfg"'"
- /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_CONFIG/openwith.cfg"'" "$ext" "$def_app"
+ sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_EXTENSIONS_CFG"'"
+ /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$def_app"
  sync
   
  Get_word w1 "@SelectBooks"
@@ -381,15 +434,15 @@ Set_default()
  exit 0
 }
 
-for str in `awk /:/ "'"$SYSTEM_CONFIG/extensions.cfg"'"|tr -d '\''\r'\''`; do
+for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
  ext="${str%%:*}"
  [ "$ext" != "fb2" ] && continue
  Set_default
 done
-for str in `awk /:/ "'"$EBRMAIN_CONFIG/extensions.cfg"'"|tr -d '\''\r'\''`; do
+for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
  ext="${str%%:*}"
  [ "$ext" != "fb2" ] && continue
- echo "$str" >> "'"$SYSTEM_CONFIG/extensions.cfg"'"
+ echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
  Set_default
 done' > "$SYSTEM_BIN/openwith_fb2.app"
  fi
