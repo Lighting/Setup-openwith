@@ -453,7 +453,7 @@ Get_word w2 "@Delete_book"
 Get_word w3 "@No"
 /ebrmain/bin/dialog 4 "" "$w1
 $w2
-("$0")" "@Yes" "> $w3 <"
+(""$0"")" "@Yes" "> $w3 <"
 [ "$?" = "1" ] && rm -f "$0"
 
 sync
