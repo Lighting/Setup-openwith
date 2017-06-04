@@ -6,4 +6,4 @@ ratings:
   paths:
     - "**.app"
 exclude_paths:
-  - test-env*/**
+  - test-env*/
