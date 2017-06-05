@@ -66,7 +66,7 @@ READER5-EXT7="cbz:@ZIP_file:1:koreader.app:ICON_ZIP"
 FAST_SWITCH_APP="cr3-pb.app"
 default_switch_app="fbreader.app"
 ALTERNATE_SWITCH_APP="eink-reader.app"
-FAST_SWITCH_SHORTCUT='control\.panel\.shortcut\.5'
+FAST_SWITCH_SHORTCUT="control.panel.shortcut.5."
 # --------------------------------------------------------------------------
 
 DEFAULT_THEME="Line"
@@ -396,10 +396,11 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
     current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
   fi
   $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
-  sed -i 's/^\('"$FAST_SWITCH_SHORTCUT"'\.icon\.name=\).*$/\1desktop_launcher_library/' "$TEMP_THEME_CFG"
-  sed -i 's/^\('"$FAST_SWITCH_SHORTCUT"'\.focus\.icon\.name=\).*$/\1desktop_launcher_library_f/' "$TEMP_THEME_CFG"
-  sed -i 's/^\('"$FAST_SWITCH_SHORTCUT"'\.text=\).*$/\1fb2/' "$TEMP_THEME_CFG"
-  sed -i 's:^\('"$FAST_SWITCH_SHORTCUT"'\.\)\(type\|path\)=.*$:\1path='"$SYSTEM_BIN/openwith_fb2.app"':' "$TEMP_THEME_CFG"
+  sed -i 's/^\('"${FAST_SWITCH_SHORTCUT//./\\.}"'.*$\)/#\1/' "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.icon.name=desktop_launcher_library" >> "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f" >> "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.text=.fb2" >> "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app" >> "$TEMP_THEME_CFG"
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.pbt"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f "$TEMP_THEME_CFG"
