@@ -400,14 +400,18 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
   fi
   $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
   sed -i 's/^\('"${FAST_SWITCH_SHORTCUT//./\\.}"'.*$\)/#\1/' "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.icon.name=desktop_launcher_library" >> "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f" >> "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $fast_switch_app_name" >> "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_cr3.app" >> "$TEMP_THEME_CFG"
+  {
+    echo "$FAST_SWITCH_SHORTCUT.icon.name=desktop_launcher_library"
+    echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f"
+    echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $fast_switch_app_name"
+    echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_cr3.app"
+  } >> "$TEMP_THEME_CFG"
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.pbt"
   sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}"'\.\(text|path\).*$/d' "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $default_switch_app_text" >> "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app" >> "$TEMP_THEME_CFG"  
+  {
+    echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $default_switch_app_text"
+    echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app"
+  } >> "$TEMP_THEME_CFG"
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.$OPEN_WITH_EXT"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f "$TEMP_THEME_CFG"
