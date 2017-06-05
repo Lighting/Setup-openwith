@@ -67,6 +67,8 @@ FAST_SWITCH_APP="cr3-pb.app"
 default_switch_app="fbreader.app"
 ALTERNATE_SWITCH_APP="eink-reader.app"
 FAST_SWITCH_SHORTCUT="control.panel.shortcut.5."
+OPEN_WITH_SUFFIX="OpenWith"
+OPEN_WITH_EXT=".fst"
 # --------------------------------------------------------------------------
 
 DEFAULT_THEME="Line"
@@ -240,9 +242,10 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_clear.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_remove.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
+  rm -f "'"$SYSTEM_BIN/openwith_cr3.app"'"
   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
-  rm -f "'"$SYSTEM_PATH/themes/OpenWith.pbt"'"
-  rm -f "'"$SYSTEM_PATH"'/themes/"*-OpenWith.pbt
+  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_WITH_SUFFIX.pbt"'"
+  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_WITH_SUFFIX$OPEN_WITH_EXT"'"
  fi
  sync
  killall settings.app || true
@@ -299,7 +302,7 @@ $w2 - $w3
 if [ "$fast_switch" = "1" ]; then
  GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
  current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
- openwith_theme="$current_theme-OpenWith"
+ openwith_theme="$current_theme-$OPEN_WITH_SUFFIX"
  Get_word w1 "@SearchFound"
  Get_word w2 "@Theme"
  Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
@@ -391,7 +394,7 @@ r75Q7i4hl8KSid+bGoQ+7zy5Hyj6DkDuQMP5v5eU8XEmfnMhU+L3o4Xlskz8RuLshZAb/xS5p6Vd
 kqO7kkc+Re7XMiYkJ36XEr9JuRU5mtdvFX20B49fjsnP00fwe0XORb+9LF14fZ+XeklO3BWd7195
 qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
   if [ "$current_theme" = "$DEFAULT_THEME" ]; then
-	current_theme_path="$EBRMAIN_THEME/$DEFAULT_THEME.pbt"
+    current_theme_path="$EBRMAIN_THEME/$DEFAULT_THEME.pbt"
   else
     current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
   fi
@@ -399,12 +402,15 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
   sed -i 's/^\('"${FAST_SWITCH_SHORTCUT//./\\.}"'.*$\)/#\1/' "$TEMP_THEME_CFG"
   echo "$FAST_SWITCH_SHORTCUT.icon.name=desktop_launcher_library" >> "$TEMP_THEME_CFG"
   echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f" >> "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.text=.fb2" >> "$TEMP_THEME_CFG"
-  echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app" >> "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $fast_switch_app_name" >> "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_cr3.app" >> "$TEMP_THEME_CFG"
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.pbt"
+  sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}"'\.\(text|path\).*$/d' "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $default_switch_app_text" >> "$TEMP_THEME_CFG"
+  echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app" >> "$TEMP_THEME_CFG"  
+  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.$OPEN_WITH_EXT"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f "$TEMP_THEME_CFG"
-#  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_GLOBAL_CFG" theme "$openwith_theme"
   echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
