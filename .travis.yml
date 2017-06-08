@@ -41,3 +41,6 @@ script:
   - test "-e ! /mnt/ext1/system/bin/openwith_clear.app"
   - test "-e ! /mnt/ext1/system/bin/openwith_remove.app"
   - test "-e ! /mnt/ext1/system/bin/openwith_fb2.app"
+  - test "-e ! /mnt/ext1/system/themes/OpenWith.pbt"
+  - test "-e ! /mnt/ext1/system/themes/Line-OpenWith(default).pbt"
+  - test "-e ! /mnt/ext1/system/themes/Line-OpenWith(cr3).pbt"
