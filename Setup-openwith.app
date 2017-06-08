@@ -67,8 +67,10 @@ FAST_SWITCH_APP="cr3-pb.app"
 default_switch_app="fbreader.app"
 ALTERNATE_SWITCH_APP="eink-reader.app"
 FAST_SWITCH_SHORTCUT="control.panel.shortcut.5."
-OPEN_WITH_SUFFIX="OpenWith"
-OPEN_WITH_EXT=".fst"
+FAST_SWITCH_TEXT=".FB2"
+OPEN_SWITH_NAME="OpenWith"
+FAST_SWITH_THEME="$OPEN_SWITH_NAME(cr3).pbt"
+DEFAULT_SWITH_THEME="$OPEN_SWITH_NAME(default).pbt"
 # --------------------------------------------------------------------------
 
 DEFAULT_THEME="Line"
@@ -244,8 +246,7 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_cr3.app"'"
   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
-  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_WITH_SUFFIX.pbt"'"
-  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_WITH_SUFFIX$OPEN_WITH_EXT"'"
+  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITH_NAME"'"*.pbt
  fi
  sync
  killall settings.app || true
@@ -302,7 +303,7 @@ $w2 - $w3
 if [ "$fast_switch" = "1" ]; then
  GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
  current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
- openwith_theme="$current_theme-$OPEN_WITH_SUFFIX"
+ openwith_theme="$current_theme-$OPEN_SWITH_NAME"
  Get_word w1 "@SearchFound"
  Get_word w2 "@Theme"
  Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
@@ -321,7 +322,7 @@ $w2: $current_theme.
 
 $w3 \"$w4\"
 ($w2 $current_theme):
-.fb2 $w5?
+$FAST_SWITCH_TEXT $w5?
 ($w6 \"$default_switch_app_text\" / \"$fast_switch_app_name\")
 
 $w7 $w8->
@@ -403,18 +404,20 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
   {
     echo "$FAST_SWITCH_SHORTCUT.icon.name=desktop_launcher_library"
     echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f"
-    echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $fast_switch_app_name"
-    echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_cr3.app"
+    echo "$FAST_SWITCH_SHORTCUT.text=$FAST_SWITCH_TEXT $fast_switch_app_name"
+    echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app"
+    echo "$FAST_SWITCH_SHORTCUT.params=reader"
   } >> "$TEMP_THEME_CFG"
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.pbt"
+  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$FAST_SWITH_THEME"
   sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}"'\.\(text|path\).*$/d' "$TEMP_THEME_CFG"
   {
-    echo "$FAST_SWITCH_SHORTCUT.text=.fb2 $default_switch_app_text"
-    echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app"
+    echo "$FAST_SWITCH_SHORTCUT.text=$FAST_SWITCH_TEXT $default_switch_app_text"
+    echo "$FAST_SWITCH_SHORTCUT.params=cr3"
   } >> "$TEMP_THEME_CFG"
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme.$OPEN_WITH_EXT"
+  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITH_THEME"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f "$TEMP_THEME_CFG"
+  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_GLOBAL_CFG" "theme" "$current_theme-${DEFAULT_SWITH_THEME%.*}"
   echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
@@ -424,38 +427,7 @@ Get_word()
  eval "$1=\"${w:-$2}\""
 }
 
-Set_default()
-{
- apps="`echo "$str"|cut -d : -f4`"
- def_app="'"$default_switch_app"'"
- def_app_name="'"$default_switch_app_name"'"
- [ "$def_app" = "${apps%%,*}" ] && def_app="'"$FAST_SWITCH_APP"'" && def_app_name="'"$fast_switch_app_name"'"
- new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_EXTENSIONS_CFG"'"
- /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$def_app"
- sync
-  
- Get_word w1 "@SelectBooks"
- Get_word w2 "$def_app_name"
- /ebrmain/bin/dialog 0 "" "$w1: \"$w2\"" "" "" &
- /ebrmain/bin/iv2sh SendEventTo -1 154
- sleep 2
- kill $!
- 
- exit 0
-}
-
-for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
- ext="${str%%:*}"
- [ "$ext" != "fb2" ] && continue
- Set_default
-done
-for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
- ext="${str%%:*}"
- [ "$ext" != "fb2" ] && continue
- echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
- Set_default
-done' > "$SYSTEM_BIN/openwith_fb2.app"
+' > "$SYSTEM_BIN/openwith_fb2.app"
  fi
 fi
 
