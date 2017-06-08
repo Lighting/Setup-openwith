@@ -69,8 +69,10 @@ ALTERNATE_SWITCH_APP="eink-reader.app"
 FAST_SWITCH_SHORTCUT="control.panel.shortcut.5."
 FAST_SWITCH_TEXT=".FB2"
 OPEN_SWITH_NAME="OpenWith"
-FAST_SWITH_THEME="$OPEN_SWITH_NAME(cr3).pbt"
-DEFAULT_SWITH_THEME="$OPEN_SWITH_NAME(default).pbt"
+FAST_SWITH_PARAM="cr3"
+DEFAULT_SWITH_PARAM="default"
+FAST_SWITH_THEME="$OPEN_SWITH_NAME($FAST_SWITH_PARAM).pbt"
+DEFAULT_SWITH_THEME="$OPEN_SWITH_NAME($DEFAULT_SWITH_PARAM).pbt"
 # --------------------------------------------------------------------------
 
 DEFAULT_THEME="Line"
@@ -406,13 +408,13 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
     echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f"
     echo "$FAST_SWITCH_SHORTCUT.text=$FAST_SWITCH_TEXT $fast_switch_app_name"
     echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app"
-    echo "$FAST_SWITCH_SHORTCUT.params=reader"
+    echo "$FAST_SWITCH_SHORTCUT.params=$current_theme-$FAST_SWITH_THEME"
   } >> "$TEMP_THEME_CFG"
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$FAST_SWITH_THEME"
   sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}"'\.\(text|path\).*$/d' "$TEMP_THEME_CFG"
   {
     echo "$FAST_SWITCH_SHORTCUT.text=$FAST_SWITCH_TEXT $default_switch_app_text"
-    echo "$FAST_SWITCH_SHORTCUT.params=cr3"
+    echo "$FAST_SWITCH_SHORTCUT.params=$current_theme-$DEFAULT_SWITH_THEME"
   } >> "$TEMP_THEME_CFG"
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITH_THEME"
   rm -f $SYSTEM_BIN/pbtheme-openwith
@@ -427,7 +429,45 @@ Get_word()
  eval "$1=\"${w:-$2}\""
 }
 
-' > "$SYSTEM_BIN/openwith_fb2.app"
+Set_default()
+{
+ apps="`echo "$str"|cut -d : -f4`"
+ def_app="'"$default_switch_app"'"
+ fast_app="'"$FAST_SWITCH_APP"'"
+ if [ "$1" = "'"$current_theme-$DEFAULT_SWITH_THEME"'" -o "${apps%%,*}" != "$def_app" ]; then
+  app=$def_app
+  app_name="'"$default_switch_app_name"'"
+ elif [ "$1" = "'"$current_theme-$FAST_SWITH_THEME"'" -o "${apps%%,*}" != "$fast_app" ]; then
+  app=$fast_app
+  app_name="'"$fast_switch_app_name"'" 
+ fi
+ new_apps="$def_app`echo ",$apps"|sed "s/,*$app//g"|sed s/,,*/,/g`"
+ sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"SYSTEM_EXTENSIONS_CFG"'"
+ /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$app"
+ [ "$1" ] && /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "$1"
+ sync
+  
+ Get_word w1 "@SelectBooks"
+ Get_word w2 "$def_app_name"
+ /ebrmain/bin/dialog 0 "" "$w1: \"$w2\"" "" "" &
+ return_code="$!"
+ [ "$1" ] && /ebrmain/bin/iv2sh SendEventTo -1 154
+ sleep 2
+ kill "$return_code"
+ exit 0
+}
+
+for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
+ ext="${str%%:*}"
+ [ "$ext" != "fb2" ] && continue
+ Set_default
+done
+for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
+ ext="${str%%:*}"
+ [ "$ext" != "fb2" ] && continue
+ echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
+ Set_default
+done' > "$SYSTEM_BIN/openwith_fb2.app"
  fi
 fi
 
