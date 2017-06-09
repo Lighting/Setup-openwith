@@ -31,7 +31,6 @@
 /mnt/ext1/system/bin/openwith_clear.app
 /mnt/ext1/system/bin/openwith_remove.app
 /mnt/ext1/system/bin/openwith_fb2.app
-/mnt/ext1/system/bin/openwith_cr3.app
 /mnt/ext1/system/config/openwith.cfg
 /mnt/ext1/system/config/settings/personalize.json
 /mnt/ext1/system/config/settings/openwith.json
