@@ -419,7 +419,6 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITH_THEME"
   rm -f $SYSTEM_BIN/pbtheme-openwith
   rm -f "$TEMP_THEME_CFG"
-  /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_GLOBAL_CFG" "theme" "$current_theme-${DEFAULT_SWITH_THEME%.*}"
   echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
