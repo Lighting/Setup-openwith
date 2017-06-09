@@ -68,11 +68,11 @@ default_switch_app="fbreader.app"
 ALTERNATE_SWITCH_APP="eink-reader.app"
 FAST_SWITCH_SHORTCUT="control.panel.shortcut.5."
 FAST_SWITCH_TEXT=".FB2"
-OPEN_SWITH_NAME="OpenWith"
-FAST_SWITH_PARAM="cr3"
-DEFAULT_SWITH_PARAM="default"
-FAST_SWITH_THEME="$OPEN_SWITH_NAME($FAST_SWITH_PARAM).pbt"
-DEFAULT_SWITH_THEME="$OPEN_SWITH_NAME($DEFAULT_SWITH_PARAM).pbt"
+OPEN_SWITCH_NAME="OpenWith"
+FAST_SWITCH_PARAM="cr3"
+DEFAULT_SWITCH_PARAM="default"
+FAST_SWITCH_THEME="$OPEN_SWITCH_NAME($FAST_SWITCH_PARAM).pbt"
+DEFAULT_SWITCH_THEME="$OPEN_SWITCH_NAME($DEFAULT_SWITCH_PARAM).pbt"
 # --------------------------------------------------------------------------
 
 DEFAULT_THEME="Line"
@@ -249,7 +249,7 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_cr3.app"'"
   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
-  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITH_NAME"'"*.pbt
+  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITCH_NAME"'"*.pbt
  fi
  sync
  killall settings.app || true
@@ -306,7 +306,7 @@ $w2 - $w3
 if [ "$fast_switch" = "1" ]; then
  GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
  current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
- openwith_theme="$current_theme-$OPEN_SWITH_NAME"
+ openwith_theme="$current_theme-$OPEN_SWITCH_NAME"
  Get_word w1 "@SearchFound"
  Get_word w2 "@Theme"
  Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
@@ -405,16 +405,16 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
   $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
   sed -i "s/^\(${FAST_SWITCH_SHORTCUT//./\\.}.*$\)/#\1/" "$TEMP_THEME_CFG"
   fast_switch_shortcut_position="${FAST_SWITCH_SHORTCUT//./\\.}position="
-  sed -i "s/^#\($fast_switch_shortcut_position$\)/\1/" "$TEMP_THEME_CFG"
+  sed -i "s/^#\($fast_switch_shortcut_position.*$\)/\1/" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2.app" "$TEMP_THEME_CFG"
-  sed "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}params=$current_theme-$FAST_SWITH_THEME" "$TEMP_THEME_CFG" > "$TEMP_THEME2_CFG"
+  sed "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}params=$current_theme-$FAST_SWITCH_THEME" "$TEMP_THEME_CFG" > "$TEMP_THEME2_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT $fast_switch_app_name" "$TEMP_THEME2_CFG"
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME2_CFG" "$SYSTEM_PATH/themes/$current_theme-$FAST_SWITH_THEME"
-  sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}params=$current_theme-$DEFAULT_SWITH_THEME" "$TEMP_THEME_CFG"
+  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME2_CFG" "$SYSTEM_PATH/themes/$current_theme-$FAST_SWITCH_THEME"
+  sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}params=$current_theme-$DEFAULT_SWITCH_THEME" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT $default_switch_app_text" "$TEMP_THEME_CFG"
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITH_THEME"
+  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITCH_THEME"
   rm -f "$SYSTEM_BIN/pbtheme-openwith"
   rm -f "$TEMP_THEME_CFG"
   rm -f "$TEMP_THEME2_CFG"
@@ -432,10 +432,10 @@ Set_default()
  apps="`echo "$str"|cut -d : -f4`"
  def_app="'"$default_switch_app"'"
  fast_app="'"$FAST_SWITCH_APP"'"
- if [ "$1" = "'"$current_theme-$DEFAULT_SWITH_THEME"'" -o "${apps%%,*}" != "$def_app" ]; then
+ if [ "$1" = "'"$current_theme-$DEFAULT_SWITCH_THEME"'" -o "${apps%%,*}" != "$def_app" ]; then
   app=$def_app
   app_name="'"$default_switch_app_name"'"
- elif [ "$1" = "'"$current_theme-$FAST_SWITH_THEME"'" -o "${apps%%,*}" != "$fast_app" ]; then
+ elif [ "$1" = "'"$current_theme-$FAST_SWITCH_THEME"'" -o "${apps%%,*}" != "$fast_app" ]; then
   app=$fast_app
   app_name="'"$fast_switch_app_name"'" 
  fi
