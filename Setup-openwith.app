@@ -403,8 +403,9 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
     current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
   fi
   $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
-  sed -i 's/^\('"${FAST_SWITCH_SHORTCUT//./\\.}"'(?!position=).*$\)/#\1/' "$TEMP_THEME_CFG"
+  sed -i "s/^\(${FAST_SWITCH_SHORTCUT//./\\.}.*$\)/#\1/" "$TEMP_THEME_CFG"
   fast_switch_shortcut_position="${FAST_SWITCH_SHORTCUT//./\\.}position="
+  sed -i "s/^#\($fast_switch_shortcut_position$\)/\1/" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f" "$TEMP_THEME_CFG"
   sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2.app" "$TEMP_THEME_CFG"
