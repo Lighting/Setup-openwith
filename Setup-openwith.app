@@ -402,22 +402,24 @@ qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$
     current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
   fi
   $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
-  sed -i 's/^\('"${FAST_SWITCH_SHORTCUT//./\\.}"'.*$\)/#\1/' "$TEMP_THEME_CFG"
-  {
-    echo "$FAST_SWITCH_SHORTCUT.icon.name=desktop_launcher_library"
-    echo "$FAST_SWITCH_SHORTCUT.focus.icon.name=desktop_launcher_library_f"
-    echo "$FAST_SWITCH_SHORTCUT.text=$FAST_SWITCH_TEXT $fast_switch_app_name"
-    echo "$FAST_SWITCH_SHORTCUT.path=$SYSTEM_BIN/openwith_fb2.app"
-    echo "$FAST_SWITCH_SHORTCUT.params=$current_theme-$FAST_SWITH_THEME"
-  } >> "$TEMP_THEME_CFG"
+  sed -i 's/^\('"${FAST_SWITCH_SHORTCUT//./\\.}"'\(?!position=\).*$\)/#\1/' "$TEMP_THEME_CFG"
+  
+  sed -i ":^${FAST_SWITCH_SHORTCUT//./\\.}:position=.*$:a \
+  ${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library\
+  ${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f\
+  ${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2\.app\
+  ${FAST_SWITCH_SHORTCUT}params=$current_theme-$FAST_SWITH_THEME\
+  ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT $fast_switch_app_name" "$TEMP_THEME_CFG"
+  
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$FAST_SWITH_THEME"
   sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}"'\.\(text|path\).*$/d' "$TEMP_THEME_CFG"
-  {
-    echo "$FAST_SWITCH_SHORTCUT.text=$FAST_SWITCH_TEXT $default_switch_app_text"
-    echo "$FAST_SWITCH_SHORTCUT.params=$current_theme-$DEFAULT_SWITH_THEME"
-  } >> "$TEMP_THEME_CFG"
+  
+  sed -i ":^${FAST_SWITCH_SHORTCUT//./\\.}:position=.*$:a \
+  ${FAST_SWITCH_SHORTCUT}params=$current_theme-$DEFAULT_SWITH_THEME\
+  ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT $default_switch_app_text" "$TEMP_THEME_CFG"
+  
   $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITH_THEME"
-  rm -f $SYSTEM_BIN/pbtheme-openwith
+  rm -f "$SYSTEM_BIN/pbtheme-openwith"
   rm -f "$TEMP_THEME_CFG"
   echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
