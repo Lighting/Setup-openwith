@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Setup-openwith script by Lit
-# Version 1.5
 VERSION="1.5"
 # https://github.com/Lighting/Setup-openwith
 #
