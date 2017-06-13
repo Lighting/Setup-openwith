@@ -15,44 +15,44 @@ VERSION="1.5"
 READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app"
 READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader"
 #
-READER1-EXT1='asp:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT2='cgi:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT3='chm:@Z_HTML_file:1:cr3-pb.app:ICON_CHM'
-READER1-EXT4='epub:@EPUB_file:1:cr3-pb.app:ICON_EPUB'
-READER1-EXT5='fb2:@FB2_file:1:cr3-pb.app:ICON_FB2'
-READER1-EXT6='htm:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT7='htm:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT8='jsp:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT9='mht:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT10='php:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT11='pl:@HTML_file:1:cr3-pb.app:ICON_HTM'
-READER1-EXT12='rtf:@RTF_file:1:cr3-pb.app:ICON_RTF'
-READER1-EXT13='txt:@Text_file:1:cr3-pb.app:ICON_TXT'
-READER2-EXT1='tar:@TAR_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT2='tar.gz:@TAR_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT3='tgz:@TAR_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT4='tar.bz2:@TAR_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT5='tbz2:@TAR_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT6='zip:@ZIP_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT7='cbz:@ZIP_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT8='rar:@RAR_file:1:pbimageviewer.app:ICON_JPG'
-READER2-EXT9='cbr:@RAR_file:1:pbimageviewer.app:ICON_JPG'
-READER3-EXT1='7z:@ZIP_file:1:pbimageviewer.app:ICON_JPG'
-READER3-EXT2='cb7:@ZIP_file:1:pbimageviewer.app:ICON_JPG'
-READER3-EXT3='cbt:@TAR_file:1:pbimageviewer.app:ICON_JPG'
-READER4-EXT1='jpg:@JPEG_image:2:pbimageviewer.app:ICON_JPG'
-READER4-EXT2='jpeg:@JPEG_image:2:pbimageviewer.app:ICON_JPG'
-READER4-EXT3='png:@PNG_image:2:pbimageviewer.app:ICON_PNG'
-READER4-EXT4='bmp:@BMP_image:2:pbimageviewer.app:ICON_BMP'
-READER4-EXT5='tif:@TIFF_image:2:pbimageviewer.app:ICON_TIFF'
-READER4-EXT6='tiff:@TIFF_image:2:pbimageviewer.app:ICON_TIFF'
-READER5-EXT1='pdf:@PDF_file:1:koreader.app:ICON_PDF'
-READER5-EXT2='djvu:@DJVU_file:1:koreader.app:ICON_DJVU'
-READER5-EXT3='epub:@EPUB_file:1:koreader.app:ICON_EPUB'
-READER5-EXT4='fb2:@FB2_file:1:koreader.app:ICON_FB2'
-READER5-EXT5='mobi:@MOBI_file:1:koreader.app:ICON_MOBI'
-READER5-EXT6='zip:@ZIP_file:1:koreader.app:ICON_ZIP'
-READER5-EXT7='cbz:@ZIP_file:1:koreader.app:ICON_ZIP'
+READER_EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT2="cgi:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT3="chm:@Z_HTML_file:1:cr3-pb.app:ICON_CHM"
+READER_EXT4="epub:@EPUB_file:1:cr3-pb.app:ICON_EPUB"
+READER_EXT5="fb2:@FB2_file:1:cr3-pb.app:ICON_FB2"
+READER_EXT6="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT7="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT8="jsp:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT9="mht:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT10="php:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT11="pl:@HTML_file:1:cr3-pb.app:ICON_HTM"
+READER_EXT12="rtf:@RTF_file:1:cr3-pb.app:ICON_RTF"
+READER_EXT13="txt:@Text_file:1:cr3-pb.app:ICON_TXT"
+READER_EXT14="tar:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT15="tar.gz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT16="tgz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT17="tar.bz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT18="tbz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT19="zip:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT20="cbz:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT21="rar:@RAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT22="cbr:@RAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT23="7z:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT24="cb7:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT25="cbt:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+READER_EXT26="jpg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
+READER_EXT27="jpeg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
+READER_EXT28="png:@PNG_image:2:pbimageviewer.app:ICON_PNG"
+READER_EXT29="bmp:@BMP_image:2:pbimageviewer.app:ICON_BMP"
+READER_EXT30="tif:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
+READER_EXT31="tiff:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
+READER_EXT32="pdf:@PDF_file:1:koreader.app:ICON_PDF"
+READER_EXT33="djvu:@DJVU_file:1:koreader.app:ICON_DJVU"
+READER_EXT34="epub:@EPUB_file:1:koreader.app:ICON_EPUB"
+READER_EXT35="fb2:@FB2_file:1:koreader.app:ICON_FB2"
+READER_EXT36="mobi:@MOBI_file:1:koreader.app:ICON_MOBI"
+READER_EXT37="zip:@ZIP_file:1:koreader.app:ICON_ZIP"
+READER_EXT38="cbz:@ZIP_file:1:koreader.app:ICON_ZIP"
 # --------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------
@@ -67,15 +67,14 @@ FAST_SWITCH_APP="cr3-pb.app"
 default_switch_app="fbreader.app"
 ALTERNATE_SWITCH_APP="eink-reader.app"
 FAST_SWITCH_SHORTCUT="control.panel.shortcut.5."
-FAST_SWITCH_TEXT=".FB2"
+FAST_SWITCH_TEXT="FB2:"
 OPEN_SWITCH_NAME="OpenWith"
-FAST_SWITCH_PARAM="cr3"
-DEFAULT_SWITCH_PARAM="default"
-FAST_SWITCH_THEME="$OPEN_SWITCH_NAME($FAST_SWITCH_PARAM).pbt"
-DEFAULT_SWITCH_THEME="$OPEN_SWITCH_NAME($DEFAULT_SWITCH_PARAM).pbt"
+FAST_SWITCH_SUFFIX="(CR3)"
+DEFAULT_SWITCH_SUFFIX="(Reader)"
 # --------------------------------------------------------------------------
 
 DEFAULT_THEME="Line"
+TEMP_THEME="/tmp/theme.pbt"
 TEMP_THEME_CFG="/tmp/theme.cfg"
 TEMP_THEME2_CFG="/tmp/theme2.cfg"
 EBRMAIN_CONFIG="/ebrmain/config"
@@ -247,8 +246,8 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_BIN/openwith_clear.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_remove.app"'"
   rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
-  rm -f "'"$SYSTEM_BIN/openwith_cr3.app"'"
-  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
+  GLOBAL_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
+  [ "${GLOBAL_THEME%'"-$OPEN_SWITCH_NAME"'*}" != "$GLOBAL_THEME" ] && /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
   rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITCH_NAME"'"*.pbt
  fi
  sync
@@ -306,33 +305,18 @@ $w2 - $w3
 if [ "$fast_switch" = "1" ]; then
  GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
  current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
- openwith_theme="$current_theme-$OPEN_SWITCH_NAME"
- Get_word w1 "@SearchFound"
- Get_word w2 "@Theme"
- Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
- Get_word w3 "@ChangeWidget"
- Get_word w4 "@KA_srch"
- Get_word w5 "@OpenWith"
- Get_word w6 "@Sudoku_select"
- Get_reader_name default_switch_app_name "$default_switch_app"
- Get_word default_switch_app_text "$default_switch_app_name"
- Get_word w7 "@Select"
- Get_word w8 "@Settings"
- Get_word w9 "@PersonalSettings"
- Get_word w10 "@Theme"
- /ebrmain/bin/dialog 2 "" "$w1: $fast_switch_app_name
-$w2: $current_theme.
-
-$w3 \"$w4\"
-($w2 $current_theme):
-$FAST_SWITCH_TEXT $w5?
-($w6 \"$default_switch_app_text\" / \"$fast_switch_app_name\")
-
-$w7 $w8->
-$w9->
-$w10:$openwith_theme"
- if [ "$?" = "1" ]; then
-  echo 'H4sIAICUMFkAA61ZDWxcxRHeZ9/ZF+eAC9jENRFdqFOckjufjVVolLZ2QhInTcI1mAaJ0PPZfvZd
+ if [ -e "$SYSTEM_PATH/themes/$current_theme.pbt" ]; then
+  current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
+ elif [ -e "$EBRMAIN_THEME/$current_theme.pbt" ]; then
+  current_theme_path="$EBRMAIN_THEME/$current_theme.pbt"
+ else
+  current_theme="$DEFAULT_THEME"
+  current_theme_path="$EBRMAIN_THEME/$current_theme.pbt"
+ fi
+ cp -f "$current_theme_path" "$TEMP_THEME"
+ current_theme_path="$TEMP_THEME"
+ openwith_theme="${current_theme%-$OPEN_SWITCH_NAME*}-$OPEN_SWITCH_NAME"
+ echo 'H4sIAICUMFkAA61ZDWxcxRHeZ9/ZF+eAC9jENRFdqFOckjufjVVolLZ2QhInTcI1mAaJ0PPZfvZd
 Od9d33sXkv6ICyRASly7xFAoWL5KtEKFqq4UqahKWrdAFVEQKT/iX72fPMWE0FolpZZKcv3m7V5u
 4xiplfqs8c7Mzs7Mzs7svrd317rN6zVNY+WnirUwoubuZ6wDbXcj8Zi7g3HmQd8VrIn6U3sbGNv7
 kAAPE+CSUMPE2I6MAEchwC37q6kPdMceAZcxAa6KqHgyAsYaBLglj/oFT3MgA8ZeTdilfvjLHm8g
@@ -397,28 +381,27 @@ huNBZDjWD6tJaBNa+kyT0V5B+7bQGbEsI9aXtnTzv19byjVaAcot5/5fE/lTfsqrQ7xaKefc02si
 r75Q7i4hl8KSid+bGoQ+7zy5Hyj6DkDuQMP5v5eU8XEmfnMhU+L3o4Xlskz8RuLshZAb/xS5p6Vd
 kqO7kkc+Re7XMiYkJ36XEr9JuRU5mtdvFX20B49fjsnP00fwe0XORb+9LF14fZ+XeklO3BWd7195
 qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
-  if [ "$current_theme" = "$DEFAULT_THEME" ]; then
-    current_theme_path="$EBRMAIN_THEME/$DEFAULT_THEME.pbt"
-  else
-    current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
-  fi
-  $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
-  sed -i "s/^\(${FAST_SWITCH_SHORTCUT//./\\.}.*$\)/#\1/" "$TEMP_THEME_CFG"
-  fast_switch_shortcut_position="${FAST_SWITCH_SHORTCUT//./\\.}position="
-  sed -i "s/^#\($fast_switch_shortcut_position.*$\)/\1/" "$TEMP_THEME_CFG"
-  sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library" "$TEMP_THEME_CFG"
-  sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f" "$TEMP_THEME_CFG"
-  sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2.app" "$TEMP_THEME_CFG"
-  sed "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}params=$current_theme-$FAST_SWITCH_THEME" "$TEMP_THEME_CFG" > "$TEMP_THEME2_CFG"
-  sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT $fast_switch_app_name" "$TEMP_THEME2_CFG"
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME2_CFG" "$SYSTEM_PATH/themes/$current_theme-$FAST_SWITCH_THEME"
-  sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}params=$current_theme-$DEFAULT_SWITCH_THEME" "$TEMP_THEME_CFG"
-  sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT $default_switch_app_text" "$TEMP_THEME_CFG"
-  $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$current_theme-$DEFAULT_SWITCH_THEME"
-  rm -f "$SYSTEM_BIN/pbtheme-openwith"
-  rm -f "$TEMP_THEME_CFG"
-  rm -f "$TEMP_THEME2_CFG"
-  echo '#!/bin/sh
+ Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
+ Get_reader_name default_switch_app_name "$default_switch_app"
+ Get_word default_switch_app_text "$default_switch_app_name"
+ $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
+ fast_switch_shortcut_position="${FAST_SWITCH_SHORTCUT//./\\.}position="
+ sed -i "s/^\($fast_switch_shortcut_position.*$\)/#\1/" "$TEMP_THEME_CFG"
+ sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}.*$/d" "$TEMP_THEME_CFG"
+ sed -i "s/^#\($fast_switch_shortcut_position.*$\)/\1/" "$TEMP_THEME_CFG"
+ sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library" "$TEMP_THEME_CFG"
+ sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f" "$TEMP_THEME_CFG"
+ sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2.app" "$TEMP_THEME_CFG"
+ cp -f "$TEMP_THEME_CFG" "$TEMP_THEME2_CFG"
+ sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT$fast_switch_app_name" "$TEMP_THEME_CFG"
+ $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme$FAST_SWITCH_SUFFIX.pbt"
+ sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT$default_switch_app_text" "$TEMP_THEME2_CFG"
+ $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME2_CFG" "$SYSTEM_PATH/themes/$openwith_theme$DEFAULT_SWITCH_SUFFIX.pbt"
+ rm -f "$SYSTEM_BIN/pbtheme-openwith"
+ rm -f "$TEMP_THEME"
+ rm -f "$TEMP_THEME_CFG"
+ rm -f "$TEMP_THEME2_CFG"
+ echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
 Get_word()
@@ -430,28 +413,45 @@ Get_word()
 Set_default()
 {
  apps="`echo "$str"|cut -d : -f4`"
- def_app="'"$default_switch_app"'"
- fast_app="'"$FAST_SWITCH_APP"'"
- if [ "$1" = "'"$current_theme-$DEFAULT_SWITCH_THEME"'" -o "${apps%%,*}" != "$def_app" ]; then
-  app=$def_app
-  app_name="'"$default_switch_app_name"'"
- elif [ "$1" = "'"$current_theme-$FAST_SWITCH_THEME"'" -o "${apps%%,*}" != "$fast_app" ]; then
-  app=$fast_app
-  app_name="'"$fast_switch_app_name"'" 
+ app_default="'"$default_switch_app"'"
+ app_fast="'"$FAST_SWITCH_APP"'"
+ GLOBAL_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
+ current_theme="${GLOBAL_THEME:-'"$DEFAULT_THEME"'}"
+ change_theme="no"
+ if [ "${current_theme%'"-$OPEN_SWITCH_NAME"'*}" != "$current_theme" ]; then
+  change_theme="yes"
+  if [ "${current_theme%'"-$OPEN_SWITCH_NAME$FAST_SWITCH_SUFFIX"'*}" != "$current_theme" ]; then
+   def_app=$app_default
+   def_app_name="'"$default_switch_app_name"'"
+   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "${current_theme%'"-$OPEN_SWITCH_NAME"'*}'"-$OPEN_SWITCH_NAME$DEFAULT_SWITCH_SUFFIX"'"
+  elif [ "${current_theme%'"-$OPEN_SWITCH_NAME$DEFAULT_SWITCH_SUFFIX"'*}" != "$current_theme" ]; then
+   def_app=$app_fast
+   def_app_name="'"$fast_switch_app_name"'"
+   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "${current_theme%'"-$OPEN_SWITCH_NAME"'*}'"-$OPEN_SWITCH_NAME$FAST_SWITCH_SUFFIX"'"
+  else
+   change_theme="need"
+  fi
  fi
- new_apps="$def_app`echo ",$apps"|sed "s/,*$app//g"|sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"SYSTEM_EXTENSIONS_CFG"'"
- /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$app"
- [ "$1" ] && /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "$1"
+ if [ "$change_theme" != "yes" ]; then
+  if [ "${apps%%,*}" != "$app_fast" ]; then
+   def_app=$app_fast
+   def_app_name="'"$fast_switch_app_name"'"
+  else
+   def_app=$app_default
+   def_app_name="'"$default_switch_app_name"'"
+  fi
+ fi
+ new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
+ sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_EXTENSIONS_CFG"'"
+ /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$def_app"
  sync
-  
- Get_word w1 "@SelectBooks"
- Get_word w2 "$def_app_name"
- /ebrmain/bin/dialog 0 "" "$w1: \"$w2\"" "" "" &
- return_code="$!"
- [ "$1" ] && /ebrmain/bin/iv2sh SendEventTo -1 154
- sleep 2
- kill "$return_code"
+# Get_word w1 "@SelectBooks"
+# Get_word w2 "$def_app_name"
+# /ebrmain/bin/dialog 0 "" "$w1: \"$w2\"" "" "" &
+# return_code="$!"
+ [ "$change_theme" != "no" ] && /ebrmain/bin/iv2sh SendEventTo -1 154
+# sleep 1
+# kill "$return_code"
  exit 0
 }
 
@@ -466,17 +466,31 @@ for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
  echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
  Set_default
 done' > "$SYSTEM_BIN/openwith_fb2.app"
- fi
+ Get_word w1 "@ChangeWidget"
+ Get_word w2 "@KA_srch"
+ Get_word w3 "@Settings"
+ Get_word w4 "@PersonalSettings"
+ Get_word w5 "@Theme"
+ fs_text="
+$w1 \"$w2\"
+(\"$default_switch_app_text\"/\"$fast_switch_app_name\"):
+$w3->$w4->
+$w5:$openwith_theme
+"
+else
+ fs_text=""
 fi
 
 Get_word w1 "@Install_complete"
 Get_word w2 "@Delete_book"
 Get_word w3 "@No"
-/ebrmain/bin/dialog 4 "" "$w1
+/ebrmain/bin/dialog 3 "" "$w1
+$fs_text
 $w2
 (""$0"")" "@Yes" "> $w3 <"
 [ "$?" = "1" ] && rm -f "$0"
 
 sync
+killall settings.app || true
 # SendEventTo ALLTASKS EVT_CONFIGCHANGED
 /ebrmain/bin/iv2sh SendEventTo -1 154
