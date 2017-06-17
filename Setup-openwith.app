@@ -14,44 +14,45 @@ VERSION="1.5"
 READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app"
 READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader"
 #
-READER_EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT2="cgi:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT3="chm:@Z_HTML_file:1:cr3-pb.app:ICON_CHM"
-READER_EXT4="epub:@EPUB_file:1:cr3-pb.app:ICON_EPUB"
-READER_EXT5="fb2:@FB2_file:1:cr3-pb.app:ICON_FB2"
-READER_EXT6="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT7="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT8="jsp:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT9="mht:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT10="php:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT11="pl:@HTML_file:1:cr3-pb.app:ICON_HTM"
-READER_EXT12="rtf:@RTF_file:1:cr3-pb.app:ICON_RTF"
-READER_EXT13="txt:@Text_file:1:cr3-pb.app:ICON_TXT"
-READER_EXT14="tar:@TAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT15="tar.gz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT16="tgz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT17="tar.bz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT18="tbz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT19="zip:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT20="cbz:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT21="rar:@RAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT22="cbr:@RAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT23="7z:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT24="cb7:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT25="cbt:@TAR_file:1:pbimageviewer.app:ICON_JPG"
-READER_EXT26="jpg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
-READER_EXT27="jpeg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
-READER_EXT28="png:@PNG_image:2:pbimageviewer.app:ICON_PNG"
-READER_EXT29="bmp:@BMP_image:2:pbimageviewer.app:ICON_BMP"
-READER_EXT30="tif:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
-READER_EXT31="tiff:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
-READER_EXT32="pdf:@PDF_file:1:koreader.app:ICON_PDF"
-READER_EXT33="djvu:@DJVU_file:1:koreader.app:ICON_DJVU"
-READER_EXT34="epub:@EPUB_file:1:koreader.app:ICON_EPUB"
-READER_EXT35="fb2:@FB2_file:1:koreader.app:ICON_FB2"
-READER_EXT36="mobi:@MOBI_file:1:koreader.app:ICON_MOBI"
-READER_EXT37="zip:@ZIP_file:1:koreader.app:ICON_ZIP"
-READER_EXT38="cbz:@ZIP_file:1:koreader.app:ICON_ZIP"
+BINS="cr3-pb.app,pbimageviewer.app,7z.so,koreader.app"
+BIN1_EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT2="cgi:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT3="chm:@Z_HTML_file:1:cr3-pb.app:ICON_CHM"
+BIN1_EXT4="epub:@EPUB_file:1:cr3-pb.app:ICON_EPUB"
+BIN1_EXT5="fb2:@FB2_file:1:cr3-pb.app:ICON_FB2"
+BIN1_EXT6="htm:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT7="html:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT8="jsp:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT9="mht:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT10="php:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT11="pl:@HTML_file:1:cr3-pb.app:ICON_HTM"
+BIN1_EXT12="rtf:@RTF_file:1:cr3-pb.app:ICON_RTF"
+BIN1_EXT13="txt:@Text_file:1:cr3-pb.app:ICON_TXT"
+BIN2_EXT1="tar:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT2="tar.gz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT3="tgz:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT4="tar.bz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT5="tbz2:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT6="zip:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT7="cbz:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT8="rar:@RAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT9="cbr:@RAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN2_EXT10="jpg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
+BIN2_EXT11="jpeg:@JPEG_image:2:pbimageviewer.app:ICON_JPG"
+BIN2_EXT12="png:@PNG_image:2:pbimageviewer.app:ICON_PNG"
+BIN2_EXT13="bmp:@BMP_image:2:pbimageviewer.app:ICON_BMP"
+BIN2_EXT14="tif:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
+BIN2_EXT15="tiff:@TIFF_image:2:pbimageviewer.app:ICON_TIFF"
+BIN3_EXT1="7z:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+BIN3_EXT2="cb7:@ZIP_file:1:pbimageviewer.app:ICON_JPG"
+BIN3_EXT3="cbt:@TAR_file:1:pbimageviewer.app:ICON_JPG"
+BIN4_EXT1="pdf:@PDF_file:1:koreader.app:ICON_PDF"
+BIN4_EXT2="djvu:@DJVU_file:1:koreader.app:ICON_DJVU"
+BIN4_EXT3="epub:@EPUB_file:1:koreader.app:ICON_EPUB"
+BIN4_EXT4="fb2:@FB2_file:1:koreader.app:ICON_FB2"
+BIN4_EXT5="mobi:@MOBI_file:1:koreader.app:ICON_MOBI"
+BIN4_EXT6="zip:@ZIP_file:1:koreader.app:ICON_ZIP"
+BIN4_EXT7="cbz:@ZIP_file:1:koreader.app:ICON_ZIP"
 # --------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------
@@ -100,7 +101,7 @@ Get_word w3 "@PersonalSettings"
 Get_word w4 "@OpenWith"
 /ebrmain/bin/dialog 2 "" "$w1: $w2
 \"$w3 -> $w4\" v$VERSION" "@Install_q" "@Cancel"
-[ "$?" != 1 ] && exit 1
+[ "$?" != "1" ] && exit 1
 
 Get_reader_name()
 {
@@ -117,32 +118,88 @@ Get_reader_name()
 }
 
 extensions=""
-count=1
+app_ext_count=1
 for str in `awk /:/ "$EBRMAIN_EXTENSIONS_CFG"|tr -d '\r'`; do
  ext="${str%%:*}"
  apps="`echo "$str"|cut -d : -f4`"
  extensions="$extensions,$ext"
- eval "APP_EXT$count=\"$apps\""
- [ "$apps" != "${apps/,}" ] && eval "APP_SYS$count=1"
- count="`expr $count + 1`"
+ eval "APP_EXT$app_ext_count=\"$apps\""
+ [ "$apps" != "${apps/,}" ] && eval "APP_SYS$app_ext_count=1"
+ app_ext_count="`expr $app_ext_count + 1`"
 done
-extensions=${extensions:1}
 
+extensions="${extensions:1}"
 for str in `awk /:/ "$SYSTEM_EXTENSIONS_CFG"|tr -d '\r'`; do
  ext="${str%%:*}"
- [ "$extensions" = "${extensions/,$ext}" ] && extensions="$extensions,$ext" && continue
- count=1
- IFS=,
  apps="`echo "$str"|cut -d : -f4`"
- for ext_def in $extensions; do
-  if [ "$ext_def" = "$ext" ]; then
-   eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
-   eval "APP_DEF$count=\"${apps%%,*}\""
-   break
+ if [ "$extensions" = "${extensions/,$ext}" ]; then
+  extensions="$extensions,$ext"
+  eval "APP_EXT$app_ext_count=\"$apps\""
+  app_ext_count="`expr $app_ext_count + 1`"
+ else
+  count=1
+  IFS=,
+  for ext_def in $extensions; do
+   if [ "$ext_def" = "$ext" ]; then
+    eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
+    eval "APP_DEF$count=\"${apps%%,*}\""
+    break
+   fi
+   count="`expr $count + 1`"
+  done
+ fi
+done
+
+found_bins=0
+extensions_cfg=""
+extensions2="$extensions"
+count=0
+IFS=,
+for bin_file in $BINS; do
+ count="`expr $count + 1`"
+ [ -e "$SYSTEM_BIN/$bin_file" ] || continue
+ count2=1
+ while true; do
+  eval "str=\"\$BIN${count}_EXT$count2\""
+  [ "$str" ] || break
+  ext="${str%%:*}"
+  apps="`echo "$str"|cut -d : -f4`"
+  reader_app_first="${apps%%,*}"
+  fi [ "$extensions2" = "${extensions2/,$ext}" ]; then
+   extensions2="$extensions2,$ext"
+   eval "APP_EXT$app_ext_count=\"$apps\""
+   app_ext_count="`expr $app_ext_count + 1`"
+   extensions_cfg="$extensions_cfg$str
+"
+   found_bins=1
   fi
-  count="`expr $count + 1`"
+  count3=1
+  for ext_def in $extensions2; do
+    if [ "$ext_def" = "$ext" ]; then
+    eval "APP2_EXT$count3=\"\${APP_EXT2$count3:-\$APP_EXT$count3},$apps\""
+	found_bins=1
+    break
+   fi
+   count3="`expr $count3 + 1`"
+  done
+  count2="`expr $count2 + 1`"
  done
 done
+
+if [ "$found_bins" = "1" ]; then
+ Get_word w1 "@SearchFound"
+ Get_word w2 "@DetailSoftwareInfo"
+ Get_word w3 "@Add"
+ Get_word w4 "@Formats"
+ /ebrmain/bin/dialog 2 "" "$w1 $w2.
+$w3 $w4 ($SYSTEM_EXTENSIONS_CFG):
+$extensions_cfg" "$w3"
+ if [ "$?" = "1" ]; then
+  echo -n "$extensions_cfg" >> "$SYSTEM_EXTENSIONS_CFG"
+  extensions="$extensions2"
+  found_bins=2
+ fi
+fi
 
 mkdir -p "$SYSTEM_SETTINGS"
 sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' "$EBRMAIN_CONFIG/settings/personalize.json"|head -n -1 > "$SYSTEM_SETTINGS/personalize.json"
@@ -177,7 +234,7 @@ IFS=,
 count=0
 for ext in $extensions; do
  count="`expr $count + 1`"
- eval "apps=\"\$APP_EXT$count\""
+ [ "$found_bins" = "2" ] && eval "apps=\"\${APP_EXT2$count:-\$APP_EXT$count}\"" || eval "apps=\"\$APP_EXT$count\""
  [ "$ext" = "fb2" -a "${apps/$ALTERNATE_SWITCH_APP}" != "$apps" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
  [ "$apps" = "${apps/,}" ] && continue
  reader_app_first="${apps%%,*}"
@@ -208,7 +265,7 @@ for ext in $extensions; do
  echo -e '"
 \t},' >> "$SYSTEM_SETTINGS/openwith.json"
  eval "reader_app_def=\"\$APP_DEF$count\""
- [ -z "$reader_app_def" ] || /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
+ [ "$reader_app_def" ] && /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
 done
 
 echo -e '\t{
@@ -272,7 +329,7 @@ while read def_str; do
   Set_default
   apply=1
  done
- if [ $apply = 0 ]; then
+ if [ "$apply" = "0" ]; then
  for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
@@ -298,8 +355,8 @@ Get_word w2 "@BooksOpened"
 Get_word w3 "@APP_file"
 /ebrmain/bin/dialog 2 "" "$w1:
 $w2 - $w3
-(/mnt/ext1/system/config/handlers.cfg)?" "@Clear"
-[ "$?" = 1 ] && rm -f /mnt/ext1/system/config/handlers.cfg && sync' > "$SYSTEM_BIN/openwith_clear.app"
+('"$SYSTEM_PATH/config/handlers.cfg"')?" "@Clear"
+[ "$?" = "1" ] && rm -f "'"$SYSTEM_PATH/config/handlers.cfg"'" && sync' > "$SYSTEM_BIN/openwith_clear.app"
 
 if [ "$fast_switch" = "1" ]; then
  GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
