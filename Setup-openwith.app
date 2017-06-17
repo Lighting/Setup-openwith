@@ -132,22 +132,19 @@ extensions="${extensions:1}"
 for str in `awk /:/ "$SYSTEM_EXTENSIONS_CFG"|tr -d '\r'`; do
  ext="${str%%:*}"
  apps="`echo "$str"|cut -d : -f4`"
- if [ "$extensions" = "${extensions/,$ext}" ]; then
-  extensions="$extensions,$ext"
-  eval "APP_EXT$app_ext_count=\"$apps\""
-  app_ext_count="`expr $app_ext_count + 1`"
- else
-  count=1
-  IFS=,
-  for ext_def in $extensions; do
-   if [ "$ext_def" = "$ext" ]; then
-    eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
-    eval "APP_DEF$count=\"${apps%%,*}\""
-    break
-   fi
-   count="`expr $count + 1`"
-  done
- fi
+ count=1
+ IFS=,
+ for ext_def in $extensions; do
+  if [ "$ext_def" = "$ext" ]; then
+   eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
+   eval "APP_DEF$count=\"${apps%%,*}\""
+   continue 2
+  fi
+  count="`expr $count + 1`"
+ done
+ extensions="$extensions,$ext"
+ eval "APP_EXT$app_ext_count=\"$apps\""
+ app_ext_count="`expr $app_ext_count + 1`"
 done
 
 Add_extention_text()
@@ -176,29 +173,26 @@ for bin_file in $BINS; do
  count2=1
  while true; do
   eval "str=\"\$BIN${count}_EXT$count2\""
+  count2="`expr $count2 + 1`"
   [ "$str" ] || break
   ext="${str%%:*}"
   apps="`echo "$str"|cut -d : -f4`"
   reader_app_first="${apps%%,*}"
-  if [ "$extensions2" = "${extensions2/,$ext}" ]; then
-   extensions2="$extensions2,$ext"
-   eval "APP2_EXT$app_ext_count=\"$apps\""
-   app_ext_count="`expr $app_ext_count + 1`"
-   extensions_cfg="$extensions_cfg$str
+  count3=1
+  for ext_def in $extensions2; do
+   if [ "$ext_def" = "$ext" ]; then
+    eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
+    Add_extention_text
+    continue 2
+   fi
+   count3="`expr $count3 + 1`"
+  done
+  extensions2="$extensions2,$ext"
+  eval "APP2_EXT$app_ext_count=\"$apps\""
+  app_ext_count="`expr $app_ext_count + 1`"
+  extensions_cfg="$extensions_cfg$str
 "
-   Add_extention_text
-  else
-   count3=1
-   for ext_def in $extensions2; do
-    if [ "$ext_def" = "$ext" ]; then
-     eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
-     Add_extention_text
-     break
-    fi
-    count3="`expr $count3 + 1`"
-   done
-  fi
-  count2="`expr $count2 + 1`"
+  Add_extention_text
  done
 done
 
