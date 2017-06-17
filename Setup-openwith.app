@@ -165,7 +165,7 @@ for bin_file in $BINS; do
   ext="${str%%:*}"
   apps="`echo "$str"|cut -d : -f4`"
   reader_app_first="${apps%%,*}"
-  fi [ "$extensions2" = "${extensions2/,$ext}" ]; then
+  if [ "$extensions2" = "${extensions2/,$ext}" ]; then
    extensions2="$extensions2,$ext"
    eval "APP_EXT$app_ext_count=\"$apps\""
    app_ext_count="`expr $app_ext_count + 1`"
