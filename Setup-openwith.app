@@ -213,10 +213,11 @@ if [ "$extensions_text" ]; then
  Get_word w3 "@Add"
  Get_word w4 "@AllNew"
  Get_word w5 "@Formats"
+ Get_word w6 "@Filters"
  /ebrmain/bin/dialog 2 "" "$w1: $w2.
 
-$w3 $w4 $w5
-($SYSTEM_EXTENSIONS_CFG)?
+$w3 $w4 $w5 & $w6
+$SYSTEM_EXTENSIONS_CFG?
 $extensions_text" "$w3"
  if [ "$?" = "1" ]; then
   echo -n "$extensions_cfg" >> "$SYSTEM_EXTENSIONS_CFG"
@@ -240,6 +241,8 @@ $extensions_text" "$w3"
  else
   extensions2=""
  fi
+else
+ extensions2=""
 fi
 
 mkdir -p "$SYSTEM_SETTINGS"
