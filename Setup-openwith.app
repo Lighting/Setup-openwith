@@ -242,7 +242,6 @@ echo -e '[
 \t},' > "$SYSTEM_SETTINGS/openwith.json"
 
 Get_word w1 "@Default"
-IFS=,
 count=0
 for ext in $extensions; do
  count="`expr $count + 1`"
