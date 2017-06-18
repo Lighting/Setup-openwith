@@ -346,7 +346,7 @@ if [ "$?" = "1" ]; then
   rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITCH_NAME"'"*.pbt
  fi
  sync
- killall settings.app || true
+ killall settings.app
  /ebrmain/bin/iv2sh SendEventTo -1 154
 fi' > "$SYSTEM_BIN/openwith_remove.app"
 
@@ -586,6 +586,6 @@ $w2
 [ "$?" = "1" ] && rm -f "$0"
 
 sync
-killall settings.app || true
+killall settings.app
 # SendEventTo ALLTASKS EVT_CONFIGCHANGED
 /ebrmain/bin/iv2sh SendEventTo -1 154
