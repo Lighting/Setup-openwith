@@ -12,7 +12,7 @@ VERSION="1.5"
 # READERS_NAMES - list of readers title names
 #
 READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app,7z.so"
-READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader,Pbimageviewer(+7z.so)"
+READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader,Pbimageviewer(7z.so)"
 #
 BINS="cr3-pb.app,pbimageviewer.app,7z.so,koreader.app"
 BIN1_EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
@@ -161,10 +161,8 @@ Add_extention_text()
   fi
   reader="$count"
  fi
- found_bins=1
 }
 
-found_bins=0
 reader=0
 extensions_cfg=""
 extensions_text=""
@@ -184,11 +182,17 @@ for bin_file in $BINS; do
   count3=1
   for ext_def in $extensions2; do
    if [ "$ext_def" = "$ext" ]; then
-    eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
-    Add_extention_text
-	grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG" || extensions_cfg="$extensions_cfg$str
+    eval "reader_apps=\",\${APP2_EXT$count3:-\$APP_EXT$count3}\""
+	eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
+	for reader_app in $apps; do
+	 if [ "$reader_apps" = "${reader_apps/,$reader_app}" ]; then
+	  Add_extention_text
+	  echo "$extensions_cfg"|grep -q -e "^$ext:.*" || grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG" || extensions_cfg="$extensions_cfg$str
 "
-    continue 2
+      continue 3
+	 fi
+	done
+	continue 2
    fi
    count3="`expr $count3 + 1`"
   done
@@ -200,9 +204,9 @@ for bin_file in $BINS; do
   Add_extention_text
  done
 done
-[ "$extensions_text" ] && extensions_text="$extensions_text."
 
-if [ "$found_bins" = "1" ]; then
+if [ "$extensions_text" ]; then
+ [ "$extensions_text" ] && extensions_text="$extensions_text."
  extensions_new="${extensions_new:1}"
  Get_word w1 "@SearchFound"
  Get_word w2 "@DetailSoftwareInfo"
@@ -232,7 +236,9 @@ $extensions_text" "$w3"
    done
   done
   sort -o "$SYSTEM_EXTENSIONS_CFG" "$SYSTEM_EXTENSIONS_CFG"
-  found_bins=2
+  extensions2="1"
+ else
+  extensions2=""
  fi
 fi
 
@@ -266,12 +272,17 @@ echo -e '[
 
 rm -f "$SYSTEM_OPENWITH_CFG"
 Get_word w1 "@Default"
+fast_switch=0
 count=0
 for ext in $extensions; do
  count="`expr $count + 1`"
- eval "count2=\"\$COUNT_EXT$count\""
- [ "$found_bins" = "2" ] && eval "apps=\"\${APP2_EXT$count2:-\$APP_EXT$count2}\"" || eval "apps=\"\$APP_EXT$count2\""
- [ "$ext" = "fb2" -a "${apps/$ALTERNATE_SWITCH_APP}" != "$apps" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
+ if [ "$extensions2" ]; then
+  eval "count2=\"\$COUNT_EXT$count\""
+  eval "apps=\"\${APP2_EXT$count2:-\$APP_EXT$count2}\""
+ else
+  eval "apps=\"\$APP_EXT$count\""
+  count2="$count"
+ fi
  [ "$apps" = "${apps/,}" ] && continue
  reader_app_first="${apps%%,*}"
  Get_reader_name reader_name_first "$reader_app_first"
@@ -285,7 +296,10 @@ for ext in $extensions; do
 \t\t"values" : [' >> "$SYSTEM_SETTINGS/openwith.json"
  reader_apps=""
  for reader_app in $apps; do
-  [ "$reader_app" = "$FAST_SWITCH_APP" ] && fast_switch=1
+  if [ "$ext" = "fb2" ]; then
+   [ "$reader_app" = "$FAST_SWITCH_APP" ] && fast_switch=1
+   [ "$reader_app" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
+  fi
   [ "$reader_apps" != "${reader_apps/,$reader_app}" ] && continue
   reader_apps="$reader_apps,$reader_app"
   Get_reader_name reader_name "$reader_app"
