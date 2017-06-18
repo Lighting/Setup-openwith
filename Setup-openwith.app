@@ -11,8 +11,8 @@ VERSION="1.5"
 # READERS_APPS - list of readers executable files (in bin/ directory)
 # READERS_NAMES - list of readers title names
 #
-READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app"
-READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader"
+READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app,7z.so"
+READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader,Pbimageviewer(+7z.so)"
 #
 BINS="cr3-pb.app,pbimageviewer.app,7z.so,koreader.app"
 BIN1_EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
@@ -150,11 +150,15 @@ done
 Add_extention_text()
 {
  if [ "$reader" = "$count" ]; then
-  extensions_text="$extensions_text,$ext"
+  extensions_text="$extensions_text, $ext"
  else
-  Get_reader_name reader_name_first "$reader_app_first"
-  extensions_text="$extensions_text
-$reader_name_first: $ext"
+  Get_reader_name reader_name_first "$bin_file"
+  if [ "$extensions_text" ]; then
+   extensions_text="$extensions_text.
+- $reader_name_first: $ext"
+  else
+   extensions_text="- $reader_name_first: $ext"
+  fi
   reader="$count"
  fi
  found_bins=1
@@ -177,12 +181,13 @@ for bin_file in $BINS; do
   [ "$str" ] || break
   ext="${str%%:*}"
   apps="`echo "$str"|cut -d : -f4`"
-  reader_app_first="${apps%%,*}"
   count3=1
   for ext_def in $extensions2; do
    if [ "$ext_def" = "$ext" ]; then
     eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
     Add_extention_text
+	[ "`grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG"`" ] && extensions_cfg="$extensions_cfg$str
+"
     continue 2
    fi
    count3="`expr $count3 + 1`"
@@ -195,6 +200,7 @@ for bin_file in $BINS; do
   Add_extention_text
  done
 done
+[ "$extensions_text" ] && extensions_text="$extensions_text."
 
 if [ "$found_bins" = "1" ]; then
  extensions_new="${extensions_new:1}"
@@ -203,12 +209,29 @@ if [ "$found_bins" = "1" ]; then
  Get_word w3 "@Add"
  Get_word w4 "@AllNew"
  Get_word w5 "@Formats"
- /ebrmain/bin/dialog 2 "" "$w1 $w2.
-$w3 $w4 $w5 ($SYSTEM_EXTENSIONS_CFG):
+ /ebrmain/bin/dialog 2 "" "$w1: $w2.
+
+$w3 $w4 $w5
+($SYSTEM_EXTENSIONS_CFG)?
 $extensions_text" "$w3"
  if [ "$?" = "1" ]; then
   echo -n "$extensions_cfg" >> "$SYSTEM_EXTENSIONS_CFG"
-  extensions="$extensions2"
+  extensions="`echo -e "${extensions2//,/\\\n}"|sort`"
+  extensions="${extensions//
+/,}"
+  count=0
+  for ext in $extensions; do
+   count="`expr $count + 1`"
+   count2=1
+   for ext_def in $extensions2; do
+    if [ "$ext_def" = "$ext" ]; then
+	 eval "COUNT_EXT$count=\"$count2\""
+	 continue 2
+	fi
+	count2="`expr $count2 + 1`"
+   done
+  done
+  sort -o "$SYSTEM_EXTENSIONS_CFG" "$SYSTEM_EXTENSIONS_CFG"
   found_bins=2
  fi
 fi
@@ -245,7 +268,8 @@ Get_word w1 "@Default"
 count=0
 for ext in $extensions; do
  count="`expr $count + 1`"
- [ "$found_bins" = "2" ] && eval "apps=\"\${APP2_EXT$count:-\$APP_EXT$count}\"" || eval "apps=\"\$APP_EXT$count\""
+ eval "count2=\"$COUNT_EXT$count\""
+ [ "$found_bins" = "2" ] && eval "apps=\"\${APP2_EXT$count2:-\$APP_EXT$count2}\"" || eval "apps=\"\$APP_EXT$count2\""
  [ "$ext" = "fb2" -a "${apps/$ALTERNATE_SWITCH_APP}" != "$apps" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
  [ "$apps" = "${apps/,}" ] && continue
  reader_app_first="${apps%%,*}"
@@ -268,15 +292,18 @@ for ext in $extensions; do
  done
  echo -ne '\t\t\t],
 \t\t"title_id" : ".'"$ext" >> "$SYSTEM_SETTINGS/openwith.json"
- eval "reader_app_sys=\"\$APP_SYS$count\""
+ eval "reader_app_sys=\"\$APP_SYS$count2\""
  if [ "$reader_app_sys" = "1" ]; then
   Get_word reader_name_def "$reader_name_first"
   echo -n " ($w1 $reader_name_def)" >> "$SYSTEM_SETTINGS/openwith.json"
  fi
  echo -e '"
 \t},' >> "$SYSTEM_SETTINGS/openwith.json"
- eval "reader_app_def=\"\$APP_DEF$count\""
- [ "$reader_app_def" ] && /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
+ eval "reader_app_def=\"\$APP_DEF$count2\""
+ [ "$reader_app_def" ] || reader_app_def="$reader_app_first"
+ /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
+ new_apps="$reader_app_def`echo ",$reader_apps"|sed "s/,*$reader_app_def//g"|sed s/,,*/,/g`"
+ sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "$SYSTEM_EXTENSIONS_CFG"
 done
 
 echo -e '\t{
@@ -327,21 +354,21 @@ Set_default()
 {
  apps="`echo "$str"|cut -d : -f4`"
  new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_EXTENSIONS_CFG"'"
+ sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "'"$SYSTEM_EXTENSIONS_CFG"'"
 }
 
 while read def_str; do
  apply=0
  def_ext="${def_str%%=*}"
  def_app="${def_str#*=}"
- for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"`; do
+ for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
   Set_default
   apply=1
  done
  if [ "$apply" = "0" ]; then
- for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"`; do
+ for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
   ext="${str%%:*}"
   [ "$ext" != "$def_ext" ] && continue
   echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
@@ -509,7 +536,7 @@ Set_default()
   fi
  fi
  new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "/^$ext:/s:\:$apps\::\:$new_apps\::" "'"$SYSTEM_EXTENSIONS_CFG"'"
+ sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "'"$SYSTEM_EXTENSIONS_CFG"'"
  /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$def_app"
  sync
 # Get_word w1 "@SelectBooks"
