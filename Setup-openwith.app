@@ -186,7 +186,7 @@ for bin_file in $BINS; do
    if [ "$ext_def" = "$ext" ]; then
     eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
     Add_extention_text
-	[ "`grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG"`" ] && extensions_cfg="$extensions_cfg$str
+	grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG" || extensions_cfg="$extensions_cfg$str
 "
     continue 2
    fi
