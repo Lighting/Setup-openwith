@@ -264,11 +264,12 @@ echo -e '[
 \t\t"title_id" : "@BrowserClearHistory"
 \t},' > "$SYSTEM_SETTINGS/openwith.json"
 
+rm -f "$SYSTEM_OPENWITH_CFG"
 Get_word w1 "@Default"
 count=0
 for ext in $extensions; do
  count="`expr $count + 1`"
- eval "count2=\"$COUNT_EXT$count\""
+ eval "count2=\"\$COUNT_EXT$count\""
  [ "$found_bins" = "2" ] && eval "apps=\"\${APP2_EXT$count2:-\$APP_EXT$count2}\"" || eval "apps=\"\$APP_EXT$count2\""
  [ "$ext" = "fb2" -a "${apps/$ALTERNATE_SWITCH_APP}" != "$apps" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
  [ "$apps" = "${apps/,}" ] && continue
