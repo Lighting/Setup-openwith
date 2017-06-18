@@ -14,6 +14,9 @@ VERSION="1.5"
 READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app,7z.so"
 READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,@eink-reader,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader,Pbimageviewer(7z.so)"
 #
+# BINS - List of third-party reader's binaries
+# BIN#_EXT$ - additional extensions.cfg string $ for # reader's binary
+#
 BINS="cr3-pb.app,pbimageviewer.app,7z.so,koreader.app"
 BIN1_EXT1="asp:@HTML_file:1:cr3-pb.app:ICON_HTM"
 BIN1_EXT2="cgi:@HTML_file:1:cr3-pb.app:ICON_HTM"
@@ -91,8 +94,8 @@ LNG="`awk -F= '/^language=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
 
 Get_word()
 {
- w="`awk -F= '/^'"$2"'=/ {print $2}' "$EBRMAIN_LANG/${LNG:-en}.txt"|tr -d '\r'`"
- eval "$1=\"${w:-$2}\""
+	w="`awk -F= '/^'"$2"'=/ {print $2}' "$EBRMAIN_LANG/${LNG:-en}.txt"|tr -d '\r'`"
+	eval "$1=\"${w:-$2}\""
 }
 
 Get_word w1 "@Install"
@@ -105,62 +108,62 @@ Get_word w4 "@OpenWith"
 
 Get_reader_name()
 {
- app_count=1
- for app in $READERS_APPS; do
-  if [ "$app" = "$2" ]; then
-   app_name="`echo "$READERS_NAMES"|cut -d , -f$app_count`"
-   eval "$1=\"$app_name\""
-   return
-  fi
-  app_count="`expr $app_count + 1`"
- done
- eval "$1=\"${2%.app}\""
+	app_count=1
+	for app in $READERS_APPS; do
+		if [ "$app" = "$2" ]; then
+			app_name="`echo "$READERS_NAMES"|cut -d , -f$app_count`"
+			eval "$1=\"$app_name\""
+			return
+		fi
+		app_count="`expr $app_count + 1`"
+	done
+	eval "$1=\"${2%.app}\""
 }
 
 extensions=""
 app_ext_count=1
 for str in `awk /:/ "$EBRMAIN_EXTENSIONS_CFG"|tr -d '\r'`; do
- ext="${str%%:*}"
- apps="`echo "$str"|cut -d : -f4`"
- extensions="$extensions,$ext"
- eval "APP_EXT$app_ext_count=\"$apps\""
- [ "$apps" != "${apps/,}" ] && eval "APP_SYS$app_ext_count=1"
- app_ext_count="`expr $app_ext_count + 1`"
+	ext="${str%%:*}"
+	apps="`echo "$str"|cut -d : -f4`"
+	extensions="$extensions,$ext"
+	eval "APP_EXT$app_ext_count=\"$apps\""
+	[ "$apps" != "${apps/,}" ] && eval "APP_SYS$app_ext_count=1"
+	app_ext_count="`expr $app_ext_count + 1`"
 done
 
 extensions="${extensions:1}"
 for str in `awk /:/ "$SYSTEM_EXTENSIONS_CFG"|tr -d '\r'`; do
- ext="${str%%:*}"
- apps="`echo "$str"|cut -d : -f4`"
- count=1
- IFS=,
- for ext_def in $extensions; do
-  if [ "$ext_def" = "$ext" ]; then
-   eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
-   eval "APP_DEF$count=\"${apps%%,*}\""
-   continue 2
-  fi
-  count="`expr $count + 1`"
- done
- extensions="$extensions,$ext"
- eval "APP_EXT$app_ext_count=\"$apps\""
- app_ext_count="`expr $app_ext_count + 1`"
+	ext="${str%%:*}"
+	apps="`echo "$str"|cut -d : -f4`"
+	count=1
+	IFS=,
+	for ext_def in $extensions; do
+		if [ "$ext_def" = "$ext" ]; then
+			eval "APP_EXT$count=\"\$APP_EXT$count,$apps\""
+			eval "APP_DEF$count=\"${apps%%,*}\""
+			continue 2
+		fi
+		count="`expr $count + 1`"
+	done
+	extensions="$extensions,$ext"
+	eval "APP_EXT$app_ext_count=\"$apps\""
+	app_ext_count="`expr $app_ext_count + 1`"
 done
 
 Add_extention_text()
 {
- if [ "$reader" = "$count" ]; then
-  extensions_text="$extensions_text, $ext"
- else
-  Get_reader_name reader_name_first "$bin_file"
-  if [ "$extensions_text" ]; then
-   extensions_text="$extensions_text.
+	if [ "$reader" = "$count" ]; then
+		extensions_text="$extensions_text, $ext"
+	else
+		Get_reader_name reader_name_first "$bin_file"
+		if [ "$extensions_text" ]; then
+			extensions_text="$extensions_text.
 - $reader_name_first: $ext"
-  else
-   extensions_text="- $reader_name_first: $ext"
-  fi
-  reader="$count"
- fi
+		else
+			extensions_text="- $reader_name_first: $ext"
+		fi
+		reader="$count"
+	fi
 }
 
 reader=0
@@ -170,79 +173,79 @@ extensions2="$extensions"
 count=0
 IFS=,
 for bin_file in $BINS; do
- count="`expr $count + 1`"
- [ -e "$SYSTEM_BIN/$bin_file" ] || continue
- count2=1
- while true; do
-  eval "str=\"\$BIN${count}_EXT$count2\""
-  count2="`expr $count2 + 1`"
-  [ "$str" ] || break
-  ext="${str%%:*}"
-  apps="`echo "$str"|cut -d : -f4`"
-  count3=1
-  for ext_def in $extensions2; do
-   if [ "$ext_def" = "$ext" ]; then
-    eval "reader_apps=\",\${APP2_EXT$count3:-\$APP_EXT$count3}\""
-	eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
-	for reader_app in $apps; do
-	 if [ "$reader_apps" = "${reader_apps/,$reader_app}" ]; then
-	  Add_extention_text
-	  echo "$extensions_cfg"|grep -q -e "^$ext:.*" || grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG" || extensions_cfg="$extensions_cfg$str
+	count="`expr $count + 1`"
+	[ -e "$SYSTEM_BIN/$bin_file" ] || continue
+	count2=1
+	while true; do
+		eval "str=\"\$BIN${count}_EXT$count2\""
+		count2="`expr $count2 + 1`"
+		[ "$str" ] || break
+		ext="${str%%:*}"
+		apps="`echo "$str"|cut -d : -f4`"
+		count3=1
+		for ext_def in $extensions2; do
+			if [ "$ext_def" = "$ext" ]; then
+				eval "reader_apps=\",\${APP2_EXT$count3:-\$APP_EXT$count3}\""
+				eval "APP2_EXT$count3=\"\${APP2_EXT$count3:-\$APP_EXT$count3},$apps\""
+				for reader_app in $apps; do
+					if [ "$reader_apps" = "${reader_apps/,$reader_app}" ]; then
+						Add_extention_text
+						echo "$extensions_cfg"|grep -q -e "^$ext:.*" || grep -q -e "^$ext:.*" "$SYSTEM_EXTENSIONS_CFG" || extensions_cfg="$extensions_cfg$str
 "
-      continue 3
-	 fi
+						continue 3
+					fi
+				done
+				continue 2
+			fi
+			count3="`expr $count3 + 1`"
+		done
+		extensions2="$extensions2,$ext"
+		eval "APP2_EXT$app_ext_count=\"$apps\""
+		app_ext_count="`expr $app_ext_count + 1`"
+		extensions_cfg="$extensions_cfg$str
+"
+		Add_extention_text
 	done
-	continue 2
-   fi
-   count3="`expr $count3 + 1`"
-  done
-  extensions2="$extensions2,$ext"
-  eval "APP2_EXT$app_ext_count=\"$apps\""
-  app_ext_count="`expr $app_ext_count + 1`"
-  extensions_cfg="$extensions_cfg$str
-"
-  Add_extention_text
- done
 done
 
 if [ "$extensions_text" ]; then
- [ "$extensions_text" ] && extensions_text="$extensions_text."
- extensions_new="${extensions_new:1}"
- Get_word w1 "@SearchFound"
- Get_word w2 "@DetailSoftwareInfo"
- Get_word w3 "@Add"
- Get_word w4 "@AllNew"
- Get_word w5 "@Formats"
- Get_word w6 "@Filters"
- /ebrmain/bin/dialog 2 "" "$w1: $w2.
+	[ "$extensions_text" ] && extensions_text="$extensions_text."
+	extensions_new="${extensions_new:1}"
+	Get_word w1 "@SearchFound"
+	Get_word w2 "@DetailSoftwareInfo"
+	Get_word w3 "@Add"
+	Get_word w4 "@AllNew"
+	Get_word w5 "@Formats"
+	Get_word w6 "@Filters"
+	/ebrmain/bin/dialog 2 "" "$w1: $w2.
 
 $w3 $w4 $w5 & $w6
 $SYSTEM_EXTENSIONS_CFG?
 $extensions_text" "$w3"
- if [ "$?" = "1" ]; then
-  echo -n "$extensions_cfg" >> "$SYSTEM_EXTENSIONS_CFG"
-  extensions="`echo -e "${extensions2//,/\\\n}"|sort`"
-  extensions="${extensions//
+	if [ "$?" = "1" ]; then
+		echo -n "$extensions_cfg" >> "$SYSTEM_EXTENSIONS_CFG"
+		extensions="`echo -e "${extensions2//,/\\\n}"|sort`"
+		extensions="${extensions//
 /,}"
-  count=0
-  for ext in $extensions; do
-   count="`expr $count + 1`"
-   count2=1
-   for ext_def in $extensions2; do
-    if [ "$ext_def" = "$ext" ]; then
-	 eval "COUNT_EXT$count=\"$count2\""
-	 continue 2
+		count=0
+		for ext in $extensions; do
+			count="`expr $count + 1`"
+			count2=1
+			for ext_def in $extensions2; do
+				if [ "$ext_def" = "$ext" ]; then
+					eval "COUNT_EXT$count=\"$count2\""
+					continue 2
+				fi
+				count2="`expr $count2 + 1`"
+			done
+		done
+		sort -o "$SYSTEM_EXTENSIONS_CFG" "$SYSTEM_EXTENSIONS_CFG"
+		extensions2="1"
+	else
+		extensions2=""
 	fi
-	count2="`expr $count2 + 1`"
-   done
-  done
-  sort -o "$SYSTEM_EXTENSIONS_CFG" "$SYSTEM_EXTENSIONS_CFG"
-  extensions2="1"
- else
-  extensions2=""
- fi
 else
- extensions2=""
+	extensions2=""
 fi
 
 mkdir -p "$SYSTEM_SETTINGS"
@@ -278,18 +281,18 @@ Get_word w1 "@Default"
 fast_switch=0
 count=0
 for ext in $extensions; do
- count="`expr $count + 1`"
- if [ "$extensions2" ]; then
-  eval "count2=\"\$COUNT_EXT$count\""
-  eval "apps=\"\${APP2_EXT$count2:-\$APP_EXT$count2}\""
- else
-  eval "apps=\"\$APP_EXT$count\""
-  count2="$count"
- fi
- [ "$apps" = "${apps/,}" ] && continue
- reader_app_first="${apps%%,*}"
- Get_reader_name reader_name_first "$reader_app_first"
- echo -e '\t{
+	count="`expr $count + 1`"
+	if [ "$extensions2" ]; then
+		eval "count2=\"\$COUNT_EXT$count\""
+		eval "apps=\"\${APP2_EXT$count2:-\$APP_EXT$count2}\""
+	else
+		eval "apps=\"\$APP_EXT$count\""
+		count2="$count"
+	fi
+	[ "$apps" = "${apps/,}" ] && continue
+	reader_app_first="${apps%%,*}"
+	Get_reader_name reader_name_first "$reader_app_first"
+	echo -e '\t{
 \t\t"control_type" : "list",
 \t\t"icon_id" : "ci_dict",
 \t\t"id" : "ext_'"$ext"'",
@@ -297,31 +300,31 @@ for ext in $extensions; do
 \t\t"default" : ":'"$reader_app_first:$reader_name_first"'",
 \t\t"storage" : [ "${SYSTEM_CONFIG_PATH}/openwith.cfg, '"$ext"'" ],
 \t\t"values" : [' >> "$SYSTEM_SETTINGS/openwith.json"
- reader_apps=""
- for reader_app in $apps; do
-  if [ "$ext" = "fb2" ]; then
-   [ "$reader_app" = "$FAST_SWITCH_APP" ] && fast_switch=1
-   [ "$reader_app" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
-  fi
-  [ "$reader_apps" != "${reader_apps/,$reader_app}" ] && continue
-  reader_apps="$reader_apps,$reader_app"
-  Get_reader_name reader_name "$reader_app"
-  echo -e '\t\t\t":'"$reader_app:$reader_name"'",' >> "$SYSTEM_SETTINGS/openwith.json"
- done
- echo -ne '\t\t\t],
+	reader_apps=""
+	for reader_app in $apps; do
+		if [ "$ext" = "fb2" ]; then
+			[ "$reader_app" = "$FAST_SWITCH_APP" ] && fast_switch=1
+			[ "$reader_app" = "$ALTERNATE_SWITCH_APP" ] && default_switch_app="$ALTERNATE_SWITCH_APP"
+		fi
+		[ "$reader_apps" != "${reader_apps/,$reader_app}" ] && continue
+		reader_apps="$reader_apps,$reader_app"
+		Get_reader_name reader_name "$reader_app"
+		echo -e '\t\t\t":'"$reader_app:$reader_name"'",' >> "$SYSTEM_SETTINGS/openwith.json"
+	done
+	echo -ne '\t\t\t],
 \t\t"title_id" : ".'"$ext" >> "$SYSTEM_SETTINGS/openwith.json"
- eval "reader_app_sys=\"\$APP_SYS$count2\""
- if [ "$reader_app_sys" = "1" ]; then
-  Get_word reader_name_def "$reader_name_first"
-  echo -n " ($w1 $reader_name_def)" >> "$SYSTEM_SETTINGS/openwith.json"
- fi
- echo -e '"
+	eval "reader_app_sys=\"\$APP_SYS$count2\""
+	if [ "$reader_app_sys" = "1" ]; then
+		Get_word reader_name_def "$reader_name_first"
+		echo -n " ($w1 $reader_name_def)" >> "$SYSTEM_SETTINGS/openwith.json"
+	fi
+	echo -e '"
 \t},' >> "$SYSTEM_SETTINGS/openwith.json"
- eval "reader_app_def=\"\$APP_DEF$count2\""
- [ "$reader_app_def" ] || reader_app_def="$reader_app_first"
- /ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
- new_apps="$reader_app_def`echo ",$reader_apps"|sed "s/,*$reader_app_def//g"|sed s/,,*/,/g`"
- sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "$SYSTEM_EXTENSIONS_CFG"
+	eval "reader_app_def=\"\$APP_DEF$count2\""
+	[ "$reader_app_def" ] || reader_app_def="$reader_app_first"
+	/ebrmain/bin/iv2sh WriteConfig "$SYSTEM_OPENWITH_CFG" "$ext" "$reader_app_def"
+	new_apps="$reader_app_def`echo ",$reader_apps"|sed "s/,*$reader_app_def//g"|sed s/,,*/,/g`"
+	sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "$SYSTEM_EXTENSIONS_CFG"
 done
 
 echo -e '\t{
@@ -338,8 +341,8 @@ LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\'
 
 Get_word()
 {
- w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
- eval "$1=\"${w:-$2}\""
+	w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
+	eval "$1=\"${w:-$2}\""
 }
 
 Get_word w1 "@Delete"
@@ -349,50 +352,50 @@ Get_word w3 "@OpenWith"
 $w2
 \"$w3\"?" "@Delete"
 if [ "$?" = "1" ]; then
- rm -f "'"$SYSTEM_SETTINGS/personalize.json"'"
- rm -f "'"$SYSTEM_SETTINGS/openwith.json"'"
- rm -f "'"$SYSTEM_OPENWITH_CFG"'"
- openwith="'"$SYSTEM_PATH"'/profiles/*/config/settings/openwith.json"
- if [ "$openwith" = "`echo $openwith`" ]; then
-  rm -f "'"$SYSTEM_BIN/openwith_apply.app"'"
-  rm -f "'"$SYSTEM_BIN/openwith_clear.app"'"
-  rm -f "'"$SYSTEM_BIN/openwith_remove.app"'"
-  rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
-  GLOBAL_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
-  [ "${GLOBAL_THEME%'"-$OPEN_SWITCH_NAME"'*}" != "$GLOBAL_THEME" ] && /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
-  rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITCH_NAME"'"*.pbt
- fi
- sync
- killall settings.app
- /ebrmain/bin/iv2sh SendEventTo -1 154
+	rm -f "'"$SYSTEM_SETTINGS/personalize.json"'"
+	rm -f "'"$SYSTEM_SETTINGS/openwith.json"'"
+	rm -f "'"$SYSTEM_OPENWITH_CFG"'"
+	openwith="'"$SYSTEM_PATH"'/profiles/*/config/settings/openwith.json"
+	if [ "$openwith" = "`echo $openwith`" ]; then
+		rm -f "'"$SYSTEM_BIN/openwith_apply.app"'"
+		rm -f "'"$SYSTEM_BIN/openwith_clear.app"'"
+		rm -f "'"$SYSTEM_BIN/openwith_remove.app"'"
+		rm -f "'"$SYSTEM_BIN/openwith_fb2.app"'"
+		GLOBAL_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
+		[ "${GLOBAL_THEME%'"-$OPEN_SWITCH_NAME"'*}" != "$GLOBAL_THEME" ] && /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" theme ""
+		rm -f "'"$SYSTEM_PATH"'/themes/"*"'"$OPEN_SWITCH_NAME"'"*.pbt
+	fi
+	sync
+	killall settings.app
+	/ebrmain/bin/iv2sh SendEventTo -1 154
 fi' > "$SYSTEM_BIN/openwith_remove.app"
 
 echo '#!/bin/sh
 Set_default()
 {
- apps="`echo "$str"|cut -d : -f4`"
- new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "'"$SYSTEM_EXTENSIONS_CFG"'"
+	apps="`echo "$str"|cut -d : -f4`"
+	new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
+	sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "'"$SYSTEM_EXTENSIONS_CFG"'"
 }
 
 while read def_str; do
- apply=0
- def_ext="${def_str%%=*}"
- def_app="${def_str#*=}"
- for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
-  ext="${str%%:*}"
-  [ "$ext" != "$def_ext" ] && continue
-  Set_default
-  apply=1
- done
- if [ "$apply" = "0" ]; then
- for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
-  ext="${str%%:*}"
-  [ "$ext" != "$def_ext" ] && continue
-  echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
-  Set_default
- done
- fi
+	apply=0
+	def_ext="${def_str%%=*}"
+	def_app="${def_str#*=}"
+	for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
+		ext="${str%%:*}"
+		[ "$ext" != "$def_ext" ] && continue
+		Set_default
+		apply=1
+	done
+	if [ "$apply" = "0" ]; then
+		for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
+			ext="${str%%:*}"
+			[ "$ext" != "$def_ext" ] && continue
+			echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
+			Set_default
+		done
+	fi
 done < "'"$SYSTEM_OPENWITH_CFG"'"
 sync
 /ebrmain/bin/iv2sh SendEventTo -1 154' > "$SYSTEM_BIN/openwith_apply.app"
@@ -402,8 +405,8 @@ LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\'
 
 Get_word()
 {
- w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
- eval "$1=\"${w:-$2}\""
+	w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
+	eval "$1=\"${w:-$2}\""
 }
 
 Get_word w1 "@BrowserClearHistory"
@@ -415,20 +418,20 @@ $w2 - $w3
 [ "$?" = "1" ] && rm -f "'"$SYSTEM_PATH/config/handlers.cfg"'" && sync' > "$SYSTEM_BIN/openwith_clear.app"
 
 if [ "$fast_switch" = "1" ]; then
- GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
- current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
- if [ -e "$SYSTEM_PATH/themes/$current_theme.pbt" ]; then
-  current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
- elif [ -e "$EBRMAIN_THEME/$current_theme.pbt" ]; then
-  current_theme_path="$EBRMAIN_THEME/$current_theme.pbt"
- else
-  current_theme="$DEFAULT_THEME"
-  current_theme_path="$EBRMAIN_THEME/$current_theme.pbt"
- fi
- cp -f "$current_theme_path" "$TEMP_THEME"
- current_theme_path="$TEMP_THEME"
- openwith_theme="${current_theme%-$OPEN_SWITCH_NAME*}-$OPEN_SWITCH_NAME"
- echo 'H4sIAICUMFkAA61ZDWxcxRHeZ9/ZF+eAC9jENRFdqFOckjufjVVolLZ2QhInTcI1mAaJ0PPZfvZd
+	GLOBAL_THEME="`awk -F= '/^theme=/ {print $2}' "$SYSTEM_GLOBAL_CFG"|tr -d '\r'`"
+	current_theme="${GLOBAL_THEME:-$DEFAULT_THEME}"
+	if [ -e "$SYSTEM_PATH/themes/$current_theme.pbt" ]; then
+		current_theme_path="$SYSTEM_PATH/themes/$current_theme.pbt"
+	elif [ -e "$EBRMAIN_THEME/$current_theme.pbt" ]; then
+		current_theme_path="$EBRMAIN_THEME/$current_theme.pbt"
+	else
+		current_theme="$DEFAULT_THEME"
+		current_theme_path="$EBRMAIN_THEME/$current_theme.pbt"
+	fi
+	cp -f "$current_theme_path" "$TEMP_THEME"
+	current_theme_path="$TEMP_THEME"
+	openwith_theme="${current_theme%-$OPEN_SWITCH_NAME*}-$OPEN_SWITCH_NAME"
+	echo 'H4sIAICUMFkAA61ZDWxcxRHeZ9/ZF+eAC9jENRFdqFOckjufjVVolLZ2QhInTcI1mAaJ0PPZfvZd
 Od9d33sXkv6ICyRASly7xFAoWL5KtEKFqq4UqahKWrdAFVEQKT/iX72fPMWE0FolpZZKcv3m7V5u
 4xiplfqs8c7Mzs7Mzs7svrd317rN6zVNY+WnirUwoubuZ6wDbXcj8Zi7g3HmQd8VrIn6U3sbGNv7
 kAAPE+CSUMPE2I6MAEchwC37q6kPdMceAZcxAa6KqHgyAsYaBLglj/oFT3MgA8ZeTdilfvjLHm8g
@@ -493,104 +496,98 @@ huNBZDjWD6tJaBNa+kyT0V5B+7bQGbEsI9aXtnTzv19byjVaAcot5/5fE/lTfsqrQ7xaKefc02si
 r75Q7i4hl8KSid+bGoQ+7zy5Hyj6DkDuQMP5v5eU8XEmfnMhU+L3o4Xlskz8RuLshZAb/xS5p6Vd
 kqO7kkc+Re7XMiYkJ36XEr9JuRU5mtdvFX20B49fjsnP00fwe0XORb+9LF14fZ+XeklO3BWd7195
 qV+QeFDSJHfVPDmCV4Wucy61Qe66BfSVfSs/A5ArLiD3H/YonaGAHAAA'|base64 -d|gzip -d > "$SYSTEM_BIN/pbtheme-openwith"
- Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
- Get_reader_name default_switch_app_name "$default_switch_app"
- Get_word default_switch_app_text "$default_switch_app_name"
- $SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
- fast_switch_shortcut_position="${FAST_SWITCH_SHORTCUT//./\\.}position="
- sed -i "s/^\($fast_switch_shortcut_position.*$\)/#\1/" "$TEMP_THEME_CFG"
- sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}.*$/d" "$TEMP_THEME_CFG"
- sed -i "s/^#\($fast_switch_shortcut_position.*$\)/\1/" "$TEMP_THEME_CFG"
- sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library" "$TEMP_THEME_CFG"
- sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f" "$TEMP_THEME_CFG"
- sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2.app" "$TEMP_THEME_CFG"
- cp -f "$TEMP_THEME_CFG" "$TEMP_THEME2_CFG"
- sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT$fast_switch_app_name" "$TEMP_THEME_CFG"
- $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme$FAST_SWITCH_SUFFIX.pbt"
- sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT$default_switch_app_text" "$TEMP_THEME2_CFG"
- $SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME2_CFG" "$SYSTEM_PATH/themes/$openwith_theme$DEFAULT_SWITCH_SUFFIX.pbt"
- rm -f "$SYSTEM_BIN/pbtheme-openwith"
- rm -f "$TEMP_THEME"
- rm -f "$TEMP_THEME_CFG"
- rm -f "$TEMP_THEME2_CFG"
- echo '#!/bin/sh
+	Get_reader_name fast_switch_app_name "$FAST_SWITCH_APP"
+	Get_reader_name default_switch_app_name "$default_switch_app"
+	Get_word default_switch_app_text "$default_switch_app_name"
+	$SYSTEM_BIN/pbtheme-openwith -e "$current_theme_path" "$TEMP_THEME_CFG"
+	fast_switch_shortcut_position="${FAST_SWITCH_SHORTCUT//./\\.}position="
+	sed -i "s/^\($fast_switch_shortcut_position.*$\)/#\1/" "$TEMP_THEME_CFG"
+	sed -i "/^${FAST_SWITCH_SHORTCUT//./\\.}.*$/d" "$TEMP_THEME_CFG"
+	sed -i "s/^#\($fast_switch_shortcut_position.*$\)/\1/" "$TEMP_THEME_CFG"
+	sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}icon.name=desktop_launcher_library" "$TEMP_THEME_CFG"
+	sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}focus.icon.name=desktop_launcher_library_f" "$TEMP_THEME_CFG"
+	sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}path=$SYSTEM_BIN/openwith_fb2.app" "$TEMP_THEME_CFG"
+	cp -f "$TEMP_THEME_CFG" "$TEMP_THEME2_CFG"
+	sed -i "/^$fast_switch_shortcut_position.*$/a${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT$fast_switch_app_name" "$TEMP_THEME_CFG"
+	$SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME_CFG" "$SYSTEM_PATH/themes/$openwith_theme$FAST_SWITCH_SUFFIX.pbt"
+	sed -i "/^$fast_switch_shortcut_position.*$/a ${FAST_SWITCH_SHORTCUT}text=$FAST_SWITCH_TEXT$default_switch_app_text" "$TEMP_THEME2_CFG"
+	$SYSTEM_BIN/pbtheme-openwith -r "$current_theme_path" "$TEMP_THEME2_CFG" "$SYSTEM_PATH/themes/$openwith_theme$DEFAULT_SWITCH_SUFFIX.pbt"
+	rm -f "$SYSTEM_BIN/pbtheme-openwith"
+	rm -f "$TEMP_THEME"
+	rm -f "$TEMP_THEME_CFG"
+	rm -f "$TEMP_THEME2_CFG"
+	echo '#!/bin/sh
 LNG="`awk -F= '\''/^language=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
 
 Get_word()
 {
- w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
- eval "$1=\"${w:-$2}\""
+	w="`awk -F= '\''/^'\''"$2"'\''=/ {print $2}'\'' "'"$EBRMAIN_LANG"'/${LNG:-en}.txt"|tr -d '\''\r'\''`"
+	eval "$1=\"${w:-$2}\""
 }
 
 Set_default()
 {
- apps="`echo "$str"|cut -d : -f4`"
- app_default="'"$default_switch_app"'"
- app_fast="'"$FAST_SWITCH_APP"'"
- GLOBAL_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
- current_theme="${GLOBAL_THEME:-'"$DEFAULT_THEME"'}"
- change_theme="no"
- if [ "${current_theme%'"-$OPEN_SWITCH_NAME"'*}" != "$current_theme" ]; then
-  change_theme="yes"
-  if [ "${current_theme%'"-$OPEN_SWITCH_NAME$FAST_SWITCH_SUFFIX"'*}" != "$current_theme" ]; then
-   def_app=$app_default
-   def_app_name="'"$default_switch_app_name"'"
-   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "${current_theme%'"-$OPEN_SWITCH_NAME"'*}'"-$OPEN_SWITCH_NAME$DEFAULT_SWITCH_SUFFIX"'"
-  elif [ "${current_theme%'"-$OPEN_SWITCH_NAME$DEFAULT_SWITCH_SUFFIX"'*}" != "$current_theme" ]; then
-   def_app=$app_fast
-   def_app_name="'"$fast_switch_app_name"'"
-   /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "${current_theme%'"-$OPEN_SWITCH_NAME"'*}'"-$OPEN_SWITCH_NAME$FAST_SWITCH_SUFFIX"'"
-  else
-   change_theme="need"
-  fi
- fi
- if [ "$change_theme" != "yes" ]; then
-  if [ "${apps%%,*}" != "$app_fast" ]; then
-   def_app=$app_fast
-   def_app_name="'"$fast_switch_app_name"'"
-  else
-   def_app=$app_default
-   def_app_name="'"$default_switch_app_name"'"
-  fi
- fi
- new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
- sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "'"$SYSTEM_EXTENSIONS_CFG"'"
- /ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$def_app"
- sync
-# Get_word w1 "@SelectBooks"
-# Get_word w2 "$def_app_name"
-# /ebrmain/bin/dialog 0 "" "$w1: \"$w2\"" "" "" &
-# return_code="$!"
- [ "$change_theme" != "no" ] && /ebrmain/bin/iv2sh SendEventTo -1 154
-# sleep 1
-# kill "$return_code"
- exit 0
+	apps="`echo "$str"|cut -d : -f4`"
+	app_default="'"$default_switch_app"'"
+	app_fast="'"$FAST_SWITCH_APP"'"
+	GLOBAL_THEME="`awk -F= '\''/^theme=/ {print $2}'\'' "'"$SYSTEM_GLOBAL_CFG"'"|tr -d '\''\r'\''`"
+	current_theme="${GLOBAL_THEME:-'"$DEFAULT_THEME"'}"
+	change_theme="no"
+	if [ "${current_theme%'"-$OPEN_SWITCH_NAME"'*}" != "$current_theme" ]; then
+		change_theme="yes"
+		if [ "${current_theme%'"-$OPEN_SWITCH_NAME$FAST_SWITCH_SUFFIX"'*}" != "$current_theme" ]; then
+			def_app=$app_default
+			def_app_name="'"$default_switch_app_name"'"
+			/ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "${current_theme%'"-$OPEN_SWITCH_NAME"'*}'"-$OPEN_SWITCH_NAME$DEFAULT_SWITCH_SUFFIX"'"
+		elif [ "${current_theme%'"-$OPEN_SWITCH_NAME$DEFAULT_SWITCH_SUFFIX"'*}" != "$current_theme" ]; then
+			def_app=$app_fast
+			def_app_name="'"$fast_switch_app_name"'"
+			/ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_GLOBAL_CFG"'" "theme" "${current_theme%'"-$OPEN_SWITCH_NAME"'*}'"-$OPEN_SWITCH_NAME$FAST_SWITCH_SUFFIX"'"
+		else
+			change_theme="need"
+		fi
+	fi
+	if [ "$change_theme" != "yes" ]; then
+		if [ "${apps%%,*}" != "$app_fast" ]; then
+			def_app=$app_fast
+			def_app_name="'"$fast_switch_app_name"'"
+		else
+			def_app=$app_default
+			def_app_name="'"$default_switch_app_name"'"
+		fi
+	fi
+	new_apps="$def_app`echo ",$apps"|sed "s/,*$def_app//g"|sed s/,,*/,/g`"
+	sed -i "s/^\($ext:.*:.*:\).*\(:.*\)$/\1$new_apps\2/" "'"$SYSTEM_EXTENSIONS_CFG"'"
+	/ebrmain/bin/iv2sh WriteConfig "'"$SYSTEM_OPENWITH_CFG"'" "$ext" "$def_app"
+	sync
+	[ "$change_theme" != "no" ] && /ebrmain/bin/iv2sh SendEventTo -1 154
+	exit 0
 }
 
 for str in `awk /:/ "'"$SYSTEM_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
- ext="${str%%:*}"
- [ "$ext" != "fb2" ] && continue
- Set_default
+	ext="${str%%:*}"
+	[ "$ext" != "fb2" ] && continue
+	Set_default
 done
 for str in `awk /:/ "'"$EBRMAIN_EXTENSIONS_CFG"'"|tr -d '\''\r'\''`; do
- ext="${str%%:*}"
- [ "$ext" != "fb2" ] && continue
- echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
- Set_default
+	ext="${str%%:*}"
+	[ "$ext" != "fb2" ] && continue
+	echo "$str" >> "'"$SYSTEM_EXTENSIONS_CFG"'"
+	Set_default
 done' > "$SYSTEM_BIN/openwith_fb2.app"
- Get_word w1 "@ChangeWidget"
- Get_word w2 "@KA_srch"
- Get_word w3 "@Settings"
- Get_word w4 "@PersonalSettings"
- Get_word w5 "@Theme"
- fs_text="
+	Get_word w1 "@ChangeWidget"
+	Get_word w2 "@KA_srch"
+	Get_word w3 "@Settings"
+	Get_word w4 "@PersonalSettings"
+	Get_word w5 "@Theme"
+	fs_text="
 $w1 \"$w2\"
 (\"$default_switch_app_text\"/\"$fast_switch_app_name\"):
 $w3->$w4->
 $w5:$openwith_theme
 "
 else
- fs_text=""
+	fs_text=""
 fi
 
 Get_word w1 "@Install_complete"
