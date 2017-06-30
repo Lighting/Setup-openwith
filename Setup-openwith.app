@@ -11,8 +11,8 @@ VERSION="1.5.1"
 # READERS_APPS - list of readers executable files (in bin/ directory)
 # READERS_NAMES - list of readers title names
 #
-READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,eink-reader_with_rmsdk.app,eink-reader_withpdfium.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app,7z.so"
-READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,PB Reader,@eink-reader_with_rmsdk,@eink-reader_withpdfium,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader,Pbimageviewer(7z.so)"
+READERS_APPS="AdobeViewer.app,fbreader.app,eink-reader.app,eink-reader_with_rmsdk.app,eink-reader_with_pdfium.app,djviewer.app,picviewer.app,browser.app,cr3-pb.app,pbimageviewer.app,koreader.app,7z.so"
+READERS_NAMES="@OpenWithAdobe,@OpenWithFbreader,PB Reader,@eink-reader_with_rmsdk,@eink-reader_with_pdfium,DjView,@Gallery,@Browser,Cool Reader 3,Pbimageviewer,KOReader,Pbimageviewer(7z.so)"
 #
 # BINS - List of third-party reader's binaries
 # BIN#_EXT$ - additional extensions.cfg string $ for # reader's binary
